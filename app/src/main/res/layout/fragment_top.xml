@@ -1,0 +1,117 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white"
+             tools:context="com.duowei.kitchen_barbecue.fragment.TopFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/uncook"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="种类:"
+                android:textColor="@color/greenDark"
+                android:textSize="@dimen/textsize20"/>
+
+            <TextView
+                android:id="@+id/tv_uncook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/yellow"
+                android:textSize="30dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/cooked"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="待做:"
+                android:textColor="@color/greenDark"
+                android:textSize="@dimen/textsize20"/>
+
+            <TextView
+                android:id="@+id/tv_cooked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/yellow"
+                android:textSize="30dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+
+            <ImageView
+                android:id="@+id/img_print"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/shape_print"
+                />
+
+            <Button
+                android:id="@+id/btn_history"
+                style="@style/TopButton"
+                android:text="历史菜品"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_search"
+                style="@style/TopButton"
+                android:text="查询菜品"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_overtime"
+                style="@style/TopButton"
+                android:text="超时单品"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/btn_saleout"
+                style="@style/TopButton"
+                android:text="沽清"/>
+
+            <Button
+                android:id="@+id/btn_setting"
+                style="@style/TopButton"
+                android:text="设置"/>
+
+            <Button
+                android:id="@+id/btn_exit"
+                style="@style/TopButton"
+                android:text="退出"/>
+            <Button
+                android:id="@+id/btn_out"
+               style="@style/TopButton"
+                android:text="当前划菜"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

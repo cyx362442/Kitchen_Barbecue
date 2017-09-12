@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textsize15">15dp</dimen>
+    <dimen name="textsize20">20dp</dimen>
+    <dimen name="textsize25">25dp</dimen>
+    <dimen name="textsize30">30dp</dimen>
+    <dimen name="textsize35">35dp</dimen>
+    <dimen name="textszie40">40dp</dimen>
+</resources>
