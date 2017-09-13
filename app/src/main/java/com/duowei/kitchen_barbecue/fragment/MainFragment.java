@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.duowei.kitchen_barbecue.R;
@@ -29,6 +30,7 @@ import java.util.List;
 public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecyclerViewItemClickListener {
     private List<Cfpb> listCfpb;
     private MainRecyAdapter mRecyAdapter;
+    private ProgressBar mPb;
 
     public MainFragment() {
         // Required empty public constructor
@@ -40,6 +42,8 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
         View inflate = inflater.inflate(R.layout.fragment_main, container, false);
         EventBus.getDefault().register(this);
         listCfpb=new ArrayList<>();
+
+        mPb = inflate.findViewById(R.id.pb);
         RecyclerView rv = inflate.findViewById(R.id.rv);
         mRecyAdapter = new MainRecyAdapter(listCfpb);
         rv.setLayoutManager(new GridLayoutManager(getActivity(),4));
@@ -53,6 +57,7 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
     @Subscribe
     public void getOrderList(Order event){
         mRecyAdapter.setNewData(listCfpb=event.getListCfpb());
+        mPb.setVisibility(View.GONE);
     }
 
     @Override

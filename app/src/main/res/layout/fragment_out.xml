@@ -38,21 +38,42 @@
                     android:text="单位"
                     android:layout_weight="1.5"/>
             </LinearLayout>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_out"
+            <RelativeLayout
+                android:id="@+id/rl"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:background="@color/white"
                 android:layout_below="@+id/ll_title">
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_out"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
+                <ProgressBar
+                    android:id="@+id/pb2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+            </RelativeLayout>
             <LinearLayout
                 android:id="@+id/ll_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.5"
-                android:layout_below="@+id/rv_out"
+                android:layout_below="@+id/rl"
                 android:background="@color/white">
+                <Button
+                    android:id="@+id/btn_clear"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_stroke"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/textsize20"
+                    android:text="清空"/>
                 <Button
                     android:id="@+id/btn_cancel"
                     android:layout_width="0dp"

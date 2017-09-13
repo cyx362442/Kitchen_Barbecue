@@ -9,14 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.adapter.OutRecyAdapter;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
+import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.OutItem;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.event.UpdateCfpb;
 import com.duowei.kitchen_barbecue.httputils.MyPost;
+import com.duowei.kitchen_barbecue.tools.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,6 +34,7 @@ import java.util.List;
 public class OutFragment extends Fragment implements View.OnClickListener {
 
     private OutRecyAdapter mAdapter;
+    private ProgressBar mPb;
 
     public OutFragment() {
         // Required empty public constructor
@@ -42,11 +46,14 @@ public class OutFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_out, container, false);
         listCfpb=new ArrayList<>();
+
+        mPb = inflate.findViewById(R.id.pb2);
         RecyclerView rv = inflate.findViewById(R.id.rv_out);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new OutRecyAdapter(listCfpb);
         rv.setAdapter(mAdapter);
 
+        inflate.findViewById(R.id.btn_clear).setOnClickListener(this);
         inflate.findViewById(R.id.btn_cancel).setOnClickListener(this);
         inflate.findViewById(R.id.btn_confirm).setOnClickListener(this);
         return inflate;
@@ -60,8 +67,11 @@ public class OutFragment extends Fragment implements View.OnClickListener {
 
     @Subscribe
     public void updateCfpb(UpdateCfpb event){
+        mPb.setVisibility(View.GONE);
         DataSupport.deleteAll(Cfpb.class);
         EventBus.getDefault().post(new ShowOut(false));
+        EventBus.getDefault().post(new CountFood());
+        MyPost.getInstance().postCfpb();
     }
 
     @Subscribe
@@ -90,7 +100,13 @@ public class OutFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.btn_cancel){
+        if(view.getId()==R.id.btn_clear){
+            DataSupport.deleteAll(Cfpb.class);
+            listCfpb = DataSupport.findAll(Cfpb.class);
+            mAdapter.setNewData(listCfpb);
+            EventBus.getDefault().post(new CountFood());
+        }
+        else if(view.getId()==R.id.btn_cancel){
             EventBus.getDefault().post(new ShowOut(false));
         }else if(view.getId()==R.id.btn_confirm){
             String sql="";
@@ -110,7 +126,10 @@ public class OutFragment extends Fragment implements View.OnClickListener {
                 }
             }
             if(!TextUtils.isEmpty(sql)){
+                mPb.setVisibility(View.VISIBLE);
                 MyPost.getInstance().setPost7(sql);
+            }else{
+                ToastUtil.show("请先划菜");
             }
         }
     }

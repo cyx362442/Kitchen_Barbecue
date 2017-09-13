@@ -1,8 +1,8 @@
 package com.duowei.kitchen_barbecue.fragment;
 
 import android.app.Fragment;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +12,13 @@ import android.widget.TextView;
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
+import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
@@ -34,8 +36,11 @@ public class TopFragment extends Fragment {
     @BindView(R.id.tv_cooked)
     TextView mTvCooked;
     Unbinder unbinder;
+    @BindView(R.id.tv_count)
+    TextView mTvCount;
 
-    private boolean isShow=false;
+    private boolean isShow = false;
+
     public TopFragment() {
         // Required empty public constructor
     }
@@ -46,8 +51,9 @@ public class TopFragment extends Fragment {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_top, container, false);
         EventBus.getDefault().register(this);
-
         unbinder = ButterKnife.bind(this, inflate);
+
+        mTvCount.bringToFront();
         return inflate;
     }
 
@@ -57,7 +63,7 @@ public class TopFragment extends Fragment {
         List<Cfpb> listCfpb = event.getListCfpb();
         mTvUncook.setText(listCfpb.size() + "种");
         float foodCount = 0;
-        float outTime=0;
+        float outTime = 0;
         for (int i = 0; i < listCfpb.size(); i++) {
             Cfpb cfpb = listCfpb.get(i);
             List<Cfpb_item> list = cfpb.getListCfpb();
@@ -65,8 +71,8 @@ public class TopFragment extends Fragment {
                 foodCount += list.get(j).sl1;
             }
             String cssj = cfpb.getCssj();
-            if(!TextUtils.isEmpty(cssj)&&cfpb.getFzs()>Integer.parseInt(cssj)){
-                outTime=outTime+cfpb.getSl();
+            if (!TextUtils.isEmpty(cssj) && cfpb.getFzs() > Integer.parseInt(cssj)) {
+                outTime = outTime + cfpb.getSl();
             }
         }
         mTvCooked.setText(foodCount + "份");
@@ -112,6 +118,17 @@ public class TopFragment extends Fragment {
 //        tempOutTime=outTime;
     }
 
+    @Subscribe
+    public void setShow(ShowOut event) {
+        isShow = event.isShow();
+    }
+
+    @Subscribe
+    public void conut(CountFood event){
+        List<Cfpb> cfpbList = DataSupport.findAll(Cfpb.class);
+        mTvCount.setText(cfpbList.size()+"");
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -127,9 +144,10 @@ public class TopFragment extends Fragment {
             case R.id.btn_setting:
                 break;
             case R.id.btn_exit:
+                getActivity().finish();
                 break;
             case R.id.btn_out:
-                EventBus.getDefault().post(new ShowOut(isShow=!isShow));
+                EventBus.getDefault().post(new ShowOut(isShow = !isShow));
                 break;
         }
     }

@@ -1,7 +1,5 @@
 package com.duowei.kitchen_barbecue.httputils;
 
-import android.util.Log;
-
 import com.android.volley.VolleyError;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
@@ -43,6 +41,8 @@ public class MyPost {
             @Override
             public void onResponse(String response) {
                 if(response.equals("]")){
+                    listCfpb.clear();
+                    EventBus.getDefault().post(new Order(listCfpb));
                     return;
                 }
                 String str="";

@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import com.duowei.kitchen_barbecue.R;
-import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.fragment.MainFragment;
 import com.duowei.kitchen_barbecue.fragment.OutFragment;
@@ -19,9 +18,6 @@ import com.duowei.kitchen_barbecue.server.PollingService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.litepal.crud.DataSupport;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Intent mServerIntent;

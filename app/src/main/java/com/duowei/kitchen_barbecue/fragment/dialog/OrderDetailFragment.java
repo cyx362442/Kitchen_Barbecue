@@ -24,12 +24,14 @@ import com.duowei.kitchen_barbecue.adapter.OrderDetailAdapter;
 import com.duowei.kitchen_barbecue.adapter.SpacesItemDecoration;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
+import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.UpdateCfpb;
 import com.duowei.kitchen_barbecue.tools.DateTimes;
 import com.duowei.kitchen_barbecue.tools.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,8 +189,8 @@ public class OrderDetailFragment extends DialogFragment implements View.OnClickL
                 float tempNum=0;
                 Cfpb cfpb21=null;
                 String trim = mTvInput.getText().toString().trim();
-                float num = Float.parseFloat(trim);
-                if(!TextUtils.isEmpty(trim)&& num >0){//手输数量
+                if(!TextUtils.isEmpty(trim)){//手输数量
+                    float num = Float.parseFloat(trim);
                     if(num>count){
                         ToastUtil.show("输入数量不能大于待划菜数量");
                         return;
@@ -212,25 +214,33 @@ public class OrderDetailFragment extends DialogFragment implements View.OnClickL
                             break;
                         }
                     }
-                }else{//点选桌号
+                }
+                else{//点选桌号
                     for(int i=0;i<mListCfpbItem.size();i++){
                         Cfpb_item cfpbItem = mListCfpbItem.get(i);
                         if(cfpbItem.isSelect==true){
-                            cfpb21 = new Cfpb(mCfpb.getXH(), mCfpb.getXmbh(), mCfpb.getXmmc(), mCfpb.getDw(),
+                            cfpb21 = new Cfpb(cfpbItem.getXh(), mCfpb.getXmbh(), mCfpb.getXmmc(), mCfpb.getDw(),
                                     cfpbItem.sl1, cfpbItem.pz, mCfpb.getXdsj(), cfpbItem.czmc1,
-                                    cfpbItem.fzs, mCfpb.getYhmc(), tempNum, DateTimes.getSysTime(),
+                                    cfpbItem.fzs, mCfpb.getYhmc(), cfpbItem.sl1, DateTimes.getSysTime(),
                                     DateTimes.getTime2(mCfpb.getXdsj()));
                             listCfpbComplete.add(cfpb21);
                         }
                     }
                 }
+
                 if(listCfpbComplete.size()<=0){
                     ToastUtil.show("请选择餐桌或输入数量");
                 }else{
+                    for(int i=0;i<mListCfpbItem.size();i++){//删除之前此菜品的己点数据
+                        Cfpb_item cfpb_item = mListCfpbItem.get(i);
+                        DataSupport.deleteAll(Cfpb.class,"xh=?",cfpb_item.getXh());
+                    }
+
                     for(int i=0;i<listCfpbComplete.size();i++){
                         Cfpb cfpb = listCfpbComplete.get(i);
                         cfpb.saveOrUpdate("xh=?",cfpb.getXH());
                     }
+                    EventBus.getDefault().post(new CountFood());
                     dismiss();
                 }
                 break;

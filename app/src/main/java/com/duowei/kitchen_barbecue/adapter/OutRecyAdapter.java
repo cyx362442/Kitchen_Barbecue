@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
+import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.OutItem;
 
 
@@ -32,6 +33,7 @@ public class OutRecyAdapter extends BaseQuickAdapter<Cfpb>{
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new OutItem(cfpb));
+                EventBus.getDefault().post(new CountFood());
             }
         });
     }
