@@ -1,5 +1,7 @@
 package com.duowei.kitchen_barbecue.adapter;
 
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.duowei.kitchen_barbecue.R;
@@ -29,5 +31,13 @@ public class MainRecyAdapter extends BaseQuickAdapter<Cfpb> {
             count+=cfpbitem.sl1;
         }
         baseViewHolder.setText(R.id.tv_num,count+cfpb.getDw());
+
+        //超时单品
+        String cssj = cfpb.getCssj();
+        if(!TextUtils.isEmpty(cssj)&&cfpb.getFzs()>Integer.parseInt(cssj)){
+            baseViewHolder.setBackgroundRes(R.id.linearLayout,R.drawable.shape_contiune_outtime);
+        }else{
+            baseViewHolder.setBackgroundRes(R.id.linearLayout,R.drawable.shape_order_green);
+        }
     }
 }

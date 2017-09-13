@@ -3,6 +3,7 @@ package com.duowei.kitchen_barbecue.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.duowei.kitchen_barbecue.bean.Cfpb_item;
 import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.event.ShowOut;
+import com.duowei.kitchen_barbecue.sound.KeySound;
+import com.duowei.kitchen_barbecue.tools.ColorAnim;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,6 +46,13 @@ public class TopFragment extends Fragment {
     TextView mTvCount;
     @BindView(R.id.btn_out)
     Button mBtnOut;
+    @BindView(R.id.btn_overtime)
+    Button mBtnOvertime;
+
+    private float tempNum = 0;
+    private float tempOutTime = 0;
+    private KeySound mSound;
+    private boolean isOutTime = false;
 
     private boolean isShow = false;
     private Intent mIntent;
@@ -58,7 +68,7 @@ public class TopFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_top, container, false);
         EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this, inflate);
-        mTvCount.bringToFront();
+        mSound = KeySound.getContext(getActivity());
         return inflate;
     }
 
@@ -81,46 +91,46 @@ public class TopFragment extends Fragment {
             }
         }
         mTvCooked.setText(foodCount + "份");
-//        Handler handler = new Handler();
-//        //超时单品、新订单声音、动画
-//        if (foodCount > tempNum&&outTime>tempOutTime) {
-//            mSound.playSound('4',0);
-//            handler.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(2000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    mSound.playSound('0', 0);
-//                    ColorAnim.getInstacne(getActivity()).startColor(mTvCooked);
-//                }
-//            });
-//        }
-//        //超时单品声音
-//        else if(outTime>tempOutTime){
-//            mSound.playSound('4',0);
-//            ColorAnim.getInstacne(getActivity()).startBackground(mBtnOvertime);
-//            handler.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(2000);
-//                        mSound.playSound('4',0);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//        }
+        Handler handler = new Handler();
+        //超时单品、新订单声音、动画
+        if (foodCount > tempNum && outTime > tempOutTime) {
+            mSound.playSound('4', 0);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    mSound.playSound('0', 0);
+                    ColorAnim.getInstacne(getActivity()).startColor(mTvCooked);
+                }
+            });
+        }
+        //超时单品声音
+        else if (outTime > tempOutTime) {
+            mSound.playSound('4', 0);
+            ColorAnim.getInstacne(getActivity()).startBackground(mBtnOvertime);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                        mSound.playSound('4', 0);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
         //新的订单
-//        else if(foodCount > tempNum){
-//            mSound.playSound('0', 0);
-//            ColorAnim.getInstacne(getActivity()).startColor(mTvCooked);
-//        }
-//        tempNum = foodCount;
-//        tempOutTime=outTime;
+        else if (foodCount > tempNum) {
+            mSound.playSound('0', 0);
+            ColorAnim.getInstacne(getActivity()).startColor(mTvCooked);
+        }
+        tempNum = foodCount;
+        tempOutTime = outTime;
     }
 
     @Subscribe
@@ -141,7 +151,7 @@ public class TopFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.img_print, R.id.btn_saleout,R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
+    @OnClick({R.id.img_print, R.id.btn_saleout, R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_print:
