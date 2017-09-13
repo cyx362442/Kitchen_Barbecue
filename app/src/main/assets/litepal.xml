@@ -5,4 +5,7 @@
     <list>
         <mapping class="com.duowei.kitchen_barbecue.bean.Cfpb"></mapping>
     </list>
+    <list>
+        <mapping class="com.duowei.kitchen_barbecue.bean.Jyxmsz"></mapping>
+    </list>
 </litepal>

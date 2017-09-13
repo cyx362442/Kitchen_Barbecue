@@ -1,15 +1,18 @@
 package com.duowei.kitchen_barbecue.fragment;
 
 import android.app.Fragment;
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.duowei.kitchen_barbecue.R;
+import com.duowei.kitchen_barbecue.app.SellOutActivity;
+import com.duowei.kitchen_barbecue.app.SettingsActivity;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
 import com.duowei.kitchen_barbecue.event.CountFood;
@@ -38,8 +41,11 @@ public class TopFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.tv_count)
     TextView mTvCount;
+    @BindView(R.id.btn_out)
+    Button mBtnOut;
 
     private boolean isShow = false;
+    private Intent mIntent;
 
     public TopFragment() {
         // Required empty public constructor
@@ -52,7 +58,6 @@ public class TopFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_top, container, false);
         EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this, inflate);
-
         mTvCount.bringToFront();
         return inflate;
     }
@@ -124,9 +129,9 @@ public class TopFragment extends Fragment {
     }
 
     @Subscribe
-    public void conut(CountFood event){
+    public void conut(CountFood event) {
         List<Cfpb> cfpbList = DataSupport.findAll(Cfpb.class);
-        mTvCount.setText(cfpbList.size()+"");
+        mTvCount.setText(cfpbList.size() + "");
     }
 
     @Override
@@ -136,12 +141,18 @@ public class TopFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.img_print, R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
+    @OnClick({R.id.img_print, R.id.btn_saleout,R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_print:
                 break;
+            case R.id.btn_saleout:
+                mIntent = new Intent(getActivity(), SellOutActivity.class);
+                startActivity(mIntent);
+                break;
             case R.id.btn_setting:
+                mIntent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(mIntent);
                 break;
             case R.id.btn_exit:
                 getActivity().finish();

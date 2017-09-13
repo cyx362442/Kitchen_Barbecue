@@ -15,6 +15,7 @@ import java.util.List;
  */
 
 public class MyPost {
+
     private MyPost() {}
 
     private static MyPost post = null;
@@ -26,14 +27,10 @@ public class MyPost {
         return post;
     }
     private List<Cfpb>listCfpb=new ArrayList<>();
-    private String url="http://192.168.1.78:2233/server/ServerSvlt?";
-    private String sqlCfpb="select A.XH,A.xmbh,LTrim(A.xmmc)as xmmc,A.dw,(isnull(A.sl,0)-isnull(A.tdsl,0)-isnull(A.YWCSL,0))sl," +
-            "A.pz,CONVERT(varchar(100), a.xdsj, 120)as xdsj,A.BY1 as czmc,datediff(minute,A.xdsj,getdate())fzs,A.yhmc,isnull(A.xszt,'')xszt," +
-            "A.ywcsl,j.py,isnull(j.by13,9999999)cssj,A.by9,A.by10 from cfpb A LEFT JOIN JYXMSZ J ON A.XMBH=J.XMBH where A.XDSJ BETWEEN DATEADD(mi,-180,GETDATE()) " +
-            "AND GETDATE() and (isnull(A.sl,0)-isnull(A.tdsl,0))>0 and a.pos='cyy'order by A.xdsj,A.xmmc|";
+
 
     public synchronized void postCfpb(){
-        DownHTTP.postVolley6(url, sqlCfpb, new VolleyResultListener() {
+        DownHTTP.postVolley6(Net.url, Net.sqlCfpb, new VolleyResultListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -77,7 +74,7 @@ public class MyPost {
 
 
     public synchronized void setPost7(String sql) {
-        DownHTTP.postVolley7(url, sql, new VolleyResultListener() {
+        DownHTTP.postVolley7(Net.url, sql, new VolleyResultListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
             }

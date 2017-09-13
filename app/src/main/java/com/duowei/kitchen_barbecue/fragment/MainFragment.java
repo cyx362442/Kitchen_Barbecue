@@ -17,6 +17,7 @@ import com.duowei.kitchen_barbecue.adapter.SpacesItemDecoration;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.fragment.dialog.OrderDetailFragment;
+import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,6 +32,8 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
     private List<Cfpb> listCfpb;
     private MainRecyAdapter mRecyAdapter;
     private ProgressBar mPb;
+    private PreferenceUtils mPreferenceUtils;
+    private RecyclerView mRv;
 
     public MainFragment() {
         // Required empty public constructor
@@ -42,16 +45,24 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
         View inflate = inflater.inflate(R.layout.fragment_main, container, false);
         EventBus.getDefault().register(this);
         listCfpb=new ArrayList<>();
+        mPreferenceUtils = PreferenceUtils.getInstance(getActivity());
 
         mPb = inflate.findViewById(R.id.pb);
-        RecyclerView rv = inflate.findViewById(R.id.rv);
+        mRv = inflate.findViewById(R.id.rv);
         mRecyAdapter = new MainRecyAdapter(listCfpb);
-        rv.setLayoutManager(new GridLayoutManager(getActivity(),4));
-        rv.addItemDecoration(new SpacesItemDecoration(5));
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(mRecyAdapter);
+        mRv.addItemDecoration(new SpacesItemDecoration(5));
+        mRv.setItemAnimator(new DefaultItemAnimator());
+        mRv.setAdapter(mRecyAdapter);
         mRecyAdapter.setOnRecyclerViewItemClickListener(this);
         return inflate;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        String colums = mPreferenceUtils.getListColums(getString(R.string.columnnum), getString(R.string.four));
+        int colum = Integer.parseInt(colums);
+        mRv.setLayoutManager(new GridLayoutManager(getActivity(),colum));
     }
 
     @Subscribe

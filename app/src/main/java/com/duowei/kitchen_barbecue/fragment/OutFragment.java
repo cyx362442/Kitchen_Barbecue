@@ -19,6 +19,7 @@ import com.duowei.kitchen_barbecue.event.OutItem;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.event.UpdateCfpb;
 import com.duowei.kitchen_barbecue.httputils.MyPost;
+import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
 import com.duowei.kitchen_barbecue.tools.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +36,8 @@ public class OutFragment extends Fragment implements View.OnClickListener {
 
     private OutRecyAdapter mAdapter;
     private ProgressBar mPb;
+    private String mPrinterIp;
+    private PreferenceUtils mPreferenceUtils;
 
     public OutFragment() {
         // Required empty public constructor
@@ -46,6 +49,7 @@ public class OutFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_out, container, false);
         listCfpb=new ArrayList<>();
+        mPreferenceUtils = PreferenceUtils.getInstance(getActivity());
 
         mPb = inflate.findViewById(R.id.pb2);
         RecyclerView rv = inflate.findViewById(R.id.rv_out);
@@ -58,6 +62,7 @@ public class OutFragment extends Fragment implements View.OnClickListener {
         inflate.findViewById(R.id.btn_confirm).setOnClickListener(this);
         return inflate;
     }
+
 
     @Subscribe
     public void setListCfpb(ShowOut event){
@@ -85,6 +90,7 @@ public class OutFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        mPrinterIp = mPreferenceUtils.getPrinterIp(getString(R.string.printip), "");
     }
 
     @Override
@@ -117,11 +123,11 @@ public class OutFragment extends Fragment implements View.OnClickListener {
                             "             select XH, MTXH, WMDBH, XMBH, XMMC, DW, SL, PZ, XSZT, YHMC, POS, TDSL, XDSJ, GETDATE(), BY1, BY2, BY3, BY4, BY5, BY6, BY7 " +
                             "             from CFPB where xh = '" + cfpb.getXH() + "'|";
                     sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
-                            "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getSl()+",pz,yhmc,'3',getdate(),by1,'192.168.1.240' from cfpb where XH='"+cfpb.getXH()+"'|";
+                            "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getSl()+",pz,yhmc,'3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
                     sql+="delete from cfpb where xh='"+cfpb.getXH()+"'|";
                 }else if(cfpb.getSl()>cfpb.getYwcsl()){
                     sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
-                            "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getYwcsl()+",pz,yhmc,'3',getdate(),by1,'192.168.1.240' from cfpb where XH='"+cfpb.getXH()+"'|";
+                            "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getYwcsl()+",pz,yhmc,'3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
                     sql+="update cfpb set ywcsl=isnull(ywcsl,0)+"+cfpb.getYwcsl()+" where xh="+cfpb.getXH()+"|";
                 }
             }

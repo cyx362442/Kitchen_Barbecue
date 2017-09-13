@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_print_stytle">
+        <item>@string/closeprint</item>
+        <item>@string/print_server</item>
+    </string-array>
+    <string-array name="list_colums">
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/five</item>
+        <item>@string/six</item>
+    </string-array>
+</resources>
