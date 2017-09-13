@@ -82,11 +82,13 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(key.equals(mContext.getString(R.string.serverip))){
-                String serviceIP = sharedPreferences.getString(mContext.getString(R.string.serverip), "");
+                String serviceIP = sharedPreferences.getString(mContext.getString(R.string.serverip), "")
+                        .trim();
                 mEtServiceIP.setSummary(serviceIP);
                 mPreferenceUtils.setServiceIp(mContext.getString(R.string.serverip),serviceIP);
             }else if(key.equals(mContext.getString(R.string.kitchen))){
-                String kitChen = sharedPreferences.getString(mContext.getString(R.string.kitchen), "");
+                String kitChen = sharedPreferences.getString(mContext.getString(R.string.kitchen), "")
+                        .trim();
                 etKetchen.setSummary(kitChen);
                 mPreferenceUtils.setKetchen(mContext.getString(R.string.kitchen),kitChen);
             }else if(key.equals(mContext.getString(R.string.printstytle))){
@@ -94,7 +96,8 @@ public class SettingsActivity extends AppCompatActivity {
                 listPrint.setSummary(printStytle);
                 mPreferenceUtils.setPrintStytle(mContext.getString(R.string.printstytle),printStytle);
             }else if(key.equals(mContext.getString(R.string.printip))){
-                String printerIP = sharedPreferences.getString(mContext.getString(R.string.printip), "");
+                String printerIP = sharedPreferences.getString(mContext.getString(R.string.printip), "")
+                        .trim();
                 mEtPrinterIP.setSummary(printerIP);
                 mPreferenceUtils.setPrinterIp(mContext.getString(R.string.printip),printerIP);
             }else if(key.equals(mContext.getString(R.string.columnnum))){

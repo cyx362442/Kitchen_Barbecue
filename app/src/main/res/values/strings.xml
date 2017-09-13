@@ -20,4 +20,7 @@
     <string name="printstytle">打印机类型</string>
     <string name="printip">打印机IP</string>
     <string name="columnnum">列数</string>
+
+    <string name="outtime">超时单品</string>
+    <string name="allfood">全部单品</string>
 </resources>

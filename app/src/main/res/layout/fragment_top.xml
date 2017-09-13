@@ -96,7 +96,7 @@
                 <Button
                     android:id="@+id/btn_overtime"
                     style="@style/TopButton"
-                    android:text="超时单品"
+                    android:text="@string/outtime"
                     android:textColor="@color/white"/>
 
                 <Button

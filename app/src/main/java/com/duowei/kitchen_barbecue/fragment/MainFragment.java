@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import com.duowei.kitchen_barbecue.adapter.MainRecyAdapter;
 import com.duowei.kitchen_barbecue.adapter.SpacesItemDecoration;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.event.Order;
+import com.duowei.kitchen_barbecue.event.OutTime;
 import com.duowei.kitchen_barbecue.fragment.dialog.OrderDetailFragment;
 import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
 
@@ -34,6 +37,8 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
     private ProgressBar mPb;
     private PreferenceUtils mPreferenceUtils;
     private RecyclerView mRv;
+    public  boolean outTime=false;
+    private List<Cfpb>listTemp;
 
     public MainFragment() {
         // Required empty public constructor
@@ -45,6 +50,8 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
         View inflate = inflater.inflate(R.layout.fragment_main, container, false);
         EventBus.getDefault().register(this);
         listCfpb=new ArrayList<>();
+        listTemp=new ArrayList<>();
+
         mPreferenceUtils = PreferenceUtils.getInstance(getActivity());
 
         mPb = inflate.findViewById(R.id.pb);
@@ -67,8 +74,35 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
 
     @Subscribe
     public void getOrderList(Order event){
-        mRecyAdapter.setNewData(listCfpb=event.getListCfpb());
+        listCfpb=event.getListCfpb();
+        if(outTime==true){
+            setOutListCfpb();
+        }else{
+            mRecyAdapter.setNewData(listCfpb);
+        }
         mPb.setVisibility(View.GONE);
+    }
+
+    private void setOutListCfpb() {
+        listTemp.clear();
+        for(int i=0;i<listCfpb.size();i++){
+            Cfpb cfpb = listCfpb.get(i);
+            String cssj = cfpb.getCssj();
+            if(!TextUtils.isEmpty(cssj)&&cfpb.getFzs()>Integer.parseInt(cssj)){
+                listTemp.add(cfpb);
+            }
+        }
+        mRecyAdapter.setNewData(listTemp);
+    }
+
+    @Subscribe
+    public void isOutTime(OutTime event){
+        outTime=event.isOutTime();
+        if(outTime==true){
+            setOutListCfpb();
+        }else{
+            mRecyAdapter.setNewData(listCfpb);
+        }
     }
 
     @Override

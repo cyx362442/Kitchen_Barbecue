@@ -18,6 +18,7 @@ import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
 import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.Order;
+import com.duowei.kitchen_barbecue.event.OutTime;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.sound.KeySound;
 import com.duowei.kitchen_barbecue.tools.ColorAnim;
@@ -151,10 +152,17 @@ public class TopFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.img_print, R.id.btn_saleout, R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
+    @OnClick({R.id.btn_overtime, R.id.btn_saleout, R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_print:
+            case R.id.btn_overtime:
+                isOutTime=!isOutTime;
+                if(isOutTime==true){
+                    mBtnOvertime.setText(getString(R.string.allfood));
+                }else{
+                    mBtnOvertime.setText(getString(R.string.outtime));
+                }
+                EventBus.getDefault().post(new OutTime(isOutTime));
                 break;
             case R.id.btn_saleout:
                 mIntent = new Intent(getActivity(), SellOutActivity.class);
