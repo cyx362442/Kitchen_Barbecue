@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +113,12 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
 
     @Override
     public void onItemClick(View view, int i) {
-        OrderDetailFragment detailFragment = OrderDetailFragment.newInstance(listCfpb.get(i));
+        OrderDetailFragment detailFragment;
+        if(outTime==true){//超时单品
+            detailFragment = OrderDetailFragment.newInstance(listTemp.get(i));
+        }else{
+            detailFragment = OrderDetailFragment.newInstance(listCfpb.get(i));
+        }
         detailFragment.show(getFragmentManager(),getString(R.string.order_detail));
     }
 }

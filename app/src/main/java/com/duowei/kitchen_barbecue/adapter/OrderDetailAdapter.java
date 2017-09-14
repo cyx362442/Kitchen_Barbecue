@@ -1,5 +1,9 @@
 package com.duowei.kitchen_barbecue.adapter;
 
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.duowei.kitchen_barbecue.R;
@@ -27,5 +31,14 @@ public class OrderDetailAdapter extends BaseQuickAdapter<Cfpb_item>{
         }else{
             baseViewHolder.setBackgroundRes(R.id.linearLayout,R.drawable.shape_square_table);
         }
+        //超时单品
+        if(!TextUtils.isEmpty(cfpb_item.cssj)&&cfpb_item.fzs>Integer.parseInt(cfpb_item.cssj)){
+            baseViewHolder.setVisible(R.id.tv_over,true);
+            baseViewHolder.setText(R.id.tv_over,"超时"+(cfpb_item.fzs-Integer.parseInt(cfpb_item.cssj))+"分");
+        }else{
+            baseViewHolder.setVisible(R.id.tv_over,false);
+        }
+//        Log.e("cssj=====",cfpb_item.cssj);
+//        Log.e("fzs=====",cfpb_item.fzs+"");
     }
 }

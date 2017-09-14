@@ -57,7 +57,7 @@ public class MyPost {
                             Cfpb_item cfpb_item = new Cfpb_item(cfpbarray[j].getXmbh(), cfpbarray[j].getCzmc(),
                                     cfpbarray[j].getSl(), cfpbarray[j].getFzs(),
                                     cfpbarray[j].getXH(), cfpbarray[j].getPz(),
-                                    cfpbarray[j].getXszt(),cfpbarray[j].getBy10(),false);
+                                    cfpbarray[j].getXszt(),cfpbarray[j].getBy10(),cfpbarray[j].getCssj(),false);
                             List<Cfpb_item> list = cfpb.getListCfpb();
                             list.add(cfpb_item);
                             cfpb.setListCfpb(list);
