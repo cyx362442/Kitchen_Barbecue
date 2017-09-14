@@ -35,10 +35,9 @@
        <Preference
            android:key="et_version"
            android:title="版本更新"></Preference>
-        <CheckBoxPreference
-            android:key="checkbox"
-            android:title="是否开机自启动"
-            android:checked="true"
-            android:visibility="gone">
-        </CheckBoxPreference>
+        <!--<CheckBoxPreference-->
+            <!--android:key="checkbox"-->
+            <!--android:title="是否开机自启动"-->
+            <!--android:checked="true">-->
+        <!--</CheckBoxPreference>-->
 </PreferenceScreen>

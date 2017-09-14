@@ -17,7 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.duowei.kitchen_barbecue.R;
+import com.duowei.kitchen_barbecue.event.Update;
+import com.duowei.kitchen_barbecue.fragment.UpdateFragment;
+import com.duowei.kitchen_barbecue.httputils.MyPost;
 import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -25,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static PreferenceUtils mPreferenceUtils;
     private static EditTextPreference mEtServiceIP;
     private static EditTextPreference mEtPrinterIP;
-    private static CheckBoxPreference mCheckbox;
+//    private static CheckBoxPreference mCheckbox;
     private static ListPreference listPrint;
     private static EditTextPreference etKetchen;
 
@@ -37,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         setContentView(R.layout.activity_settings);
         getAPPVersionName();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -64,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
             listColums = (ListPreference) findPreference(getString(R.string.columnnum));
             mEtPrinterIP = (EditTextPreference) findPreference(getString(R.string.printip));
             etVersion = findPreference("et_version");
-            mCheckbox = (CheckBoxPreference) findPreference("checkbox");
+//            mCheckbox = (CheckBoxPreference) findPreference("checkbox");
             mEtServiceIP.setSummary(mPreferenceUtils.getServiceIp(getString(R.string.serverip),""));
             etKetchen.setSummary(mPreferenceUtils.getKetchen(getString(R.string.kitchen),""));
             listPrint.setSummary(mPreferenceUtils.getPrintStytle(getString(R.string.printstytle),getResources().getString(R.string.closeprint)));
@@ -74,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
             etVersion.setSummary(mVersionName);
             etVersion.setTitle("版本更新(V"+mVersionCode+")");
             etVersion.setOnPreferenceClickListener(this);
-            mCheckbox.setChecked(mPreferenceUtils.getAutoStart("auto",true));
+//            mCheckbox.setChecked(mPreferenceUtils.getAutoStart("auto",true));
             SharedPreferences sharedPreferences = getPreferenceScreen().getSharedPreferences();
             sharedPreferences.registerOnSharedPreferenceChangeListener(this);
         }
@@ -104,17 +110,18 @@ public class SettingsActivity extends AppCompatActivity {
                 String colums = sharedPreferences.getString(mContext.getString(R.string.columnnum), "");
                 listColums.setSummary(colums);
                 mPreferenceUtils.setListColums(mContext.getString(R.string.columnnum),colums);
-            }else if(key.equals("checkbox")){
-                boolean auto=mPreferenceUtils.getAutoStart("auto", true);
-                auto=!auto;
-                mCheckbox.setChecked(auto);
-                mPreferenceUtils.setAutoStart("auto",auto);
             }
+//            else if(key.equals("checkbox")){
+//                boolean auto=mPreferenceUtils.getAutoStart("auto", true);
+//                auto=!auto;
+//                mCheckbox.setChecked(auto);
+//                mPreferenceUtils.setAutoStart("auto",auto);
+//            }
         }
 
         @Override
         public boolean onPreferenceClick(Preference preference) {
-//            Post.getInstance().checkUpdate(getActivity(),false);
+            MyPost.getInstance().checkUpdate(getActivity(),false);
             return false;
         }
     }
@@ -136,6 +143,12 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    @Subscribe
+    public void appUpdate(Update event){
+        UpdateFragment updateFragment = UpdateFragment.newInstance(event.url, event.name);
+        updateFragment.show(getFragmentManager(),getString(R.string.update));
+    }
+
     //当前APP版本号
     public void getAPPVersionName() {
         PackageManager manager = getPackageManager();
@@ -152,6 +165,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 }

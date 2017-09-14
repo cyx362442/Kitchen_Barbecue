@@ -79,13 +79,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:src="@drawable/shape_print"
+                    android:visibility="gone"
                     />
 
                 <Button
                     android:id="@+id/btn_history"
                     style="@style/TopButton"
                     android:text="历史菜品"
-                    android:visibility="gone"/>
+                    />
 
                 <Button
                     android:id="@+id/btn_search"

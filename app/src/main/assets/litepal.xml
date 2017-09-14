@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="kitchen_barbecue" ></dbname>
-    <version value="1" ></version>
+    <version value="2" ></version>
     <list>
         <mapping class="com.duowei.kitchen_barbecue.bean.Cfpb"></mapping>
     </list>
     <list>
         <mapping class="com.duowei.kitchen_barbecue.bean.Jyxmsz"></mapping>
+    </list>
+    <list>
+        <mapping class="com.duowei.kitchen_barbecue.bean.Cfpb_complete"></mapping>
     </list>
 </litepal>

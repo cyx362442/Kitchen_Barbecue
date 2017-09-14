@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.duowei.kitchen_barbecue.R;
+import com.duowei.kitchen_barbecue.app.PassRecordsActivity;
 import com.duowei.kitchen_barbecue.app.SellOutActivity;
 import com.duowei.kitchen_barbecue.app.SettingsActivity;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
@@ -152,9 +153,13 @@ public class TopFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.btn_overtime, R.id.btn_saleout, R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
+    @OnClick({R.id.btn_history,R.id.btn_overtime, R.id.btn_saleout, R.id.btn_setting, R.id.btn_exit, R.id.btn_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btn_history:
+                mIntent=new Intent(getActivity(), PassRecordsActivity.class);
+                startActivity(mIntent);
+                break;
             case R.id.btn_overtime:
                 isOutTime=!isOutTime;
                 if(isOutTime==true){

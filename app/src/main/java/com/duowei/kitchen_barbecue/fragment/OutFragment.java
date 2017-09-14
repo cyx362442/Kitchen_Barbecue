@@ -14,11 +14,13 @@ import android.widget.ProgressBar;
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.adapter.OutRecyAdapter;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
+import com.duowei.kitchen_barbecue.bean.Cfpb_complete;
 import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.OutItem;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.event.UpdateCfpb;
 import com.duowei.kitchen_barbecue.httputils.MyPost;
+import com.duowei.kitchen_barbecue.tools.DateTimes;
 import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
 import com.duowei.kitchen_barbecue.tools.ToastUtil;
 
@@ -38,6 +40,7 @@ public class OutFragment extends Fragment implements View.OnClickListener {
     private ProgressBar mPb;
     private String mPrinterIp;
     private PreferenceUtils mPreferenceUtils;
+    private String mPrintStytle;
 
     public OutFragment() {
         // Required empty public constructor
@@ -70,6 +73,7 @@ public class OutFragment extends Fragment implements View.OnClickListener {
         mAdapter.setNewData(listCfpb=cfpbList);
     }
 
+    //划菜成功
     @Subscribe
     public void updateCfpb(UpdateCfpb event){
         mPb.setVisibility(View.GONE);
@@ -77,6 +81,22 @@ public class OutFragment extends Fragment implements View.OnClickListener {
         EventBus.getDefault().post(new ShowOut(false));
         EventBus.getDefault().post(new CountFood());
         MyPost.getInstance().postCfpb();
+
+        //保存历史记录到本地
+        for(int i=0;i<listCfpb.size();i++){
+            Cfpb cfpb = listCfpb.get(i);
+            Cfpb_complete cfpbComplete = new Cfpb_complete();
+            cfpbComplete.setXmbh(cfpb.getXmbh());
+            cfpbComplete.setXmmc(cfpb.getXmmc());
+            cfpbComplete.setZh(cfpb.getCzmc());
+            cfpbComplete.setPz(cfpb.getPz());
+            cfpbComplete.setSl(cfpb.getSl());
+            cfpbComplete.setXdsj(cfpb.getXdsj());
+            cfpbComplete.setWcsj(DateTimes.getTime());
+            cfpbComplete.setZzry("");
+            cfpbComplete.setYhmc(cfpb.getYhmc());
+            cfpbComplete.save();
+        }
     }
 
     @Subscribe
@@ -84,12 +104,16 @@ public class OutFragment extends Fragment implements View.OnClickListener {
         event.getCfpb().delete();
         listCfpb = DataSupport.findAll(Cfpb.class);
         mAdapter.setNewData(listCfpb);
+        if(listCfpb.size()<=0){
+            EventBus.getDefault().post(new ShowOut(false));
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        mPrintStytle = mPreferenceUtils.getPrintStytle(getString(R.string.printstytle), getString(R.string.closeprint));
         mPrinterIp = mPreferenceUtils.getPrinterIp(getString(R.string.printip), "");
     }
 
@@ -111,6 +135,7 @@ public class OutFragment extends Fragment implements View.OnClickListener {
             listCfpb = DataSupport.findAll(Cfpb.class);
             mAdapter.setNewData(listCfpb);
             EventBus.getDefault().post(new CountFood());
+            EventBus.getDefault().post(new ShowOut(false));
         }
         else if(view.getId()==R.id.btn_cancel){
             EventBus.getDefault().post(new ShowOut(false));
@@ -122,12 +147,18 @@ public class OutFragment extends Fragment implements View.OnClickListener {
                     sql += "insert into CFPBYWC (XH, MTXH, WMDBH, XMBH, XMMC, DW, SL, PZ, XSZT, YHMC, POS, TDSL, XDSJ, WCSJ,      BY1, BY2, BY3, BY4, BY5, BY6, BY7) " +
                             "             select XH, MTXH, WMDBH, XMBH, XMMC, DW, SL, PZ, XSZT, YHMC, POS, TDSL, XDSJ, GETDATE(), BY1, BY2, BY3, BY4, BY5, BY6, BY7 " +
                             "             from CFPB where xh = '" + cfpb.getXH() + "'|";
-                    sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
-                            "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getSl()+",pz,yhmc,'3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
+                    if(mPrintStytle.equals(getString(R.string.print_server))&&!TextUtils.isEmpty(mPrinterIp)){//打印服务器
+                        sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
+                                "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getSl()+",pz,yhmc,'3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
+                    }
+
                     sql+="delete from cfpb where xh='"+cfpb.getXH()+"'|";
                 }else if(cfpb.getSl()>cfpb.getYwcsl()){
-                    sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
-                            "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getYwcsl()+",pz,yhmc,'3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
+                    if(mPrintStytle.equals(getString(R.string.print_server))&&!TextUtils.isEmpty(mPrinterIp)){//打印服务器
+                        sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
+                                "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getYwcsl()+",pz,yhmc,'3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
+                    }
+
                     sql+="update cfpb set ywcsl=isnull(ywcsl,0)+"+cfpb.getYwcsl()+" where xh="+cfpb.getXH()+"|";
                 }
             }

@@ -1,14 +1,25 @@
 package com.duowei.kitchen_barbecue.httputils;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
 import com.duowei.kitchen_barbecue.event.Order;
+import com.duowei.kitchen_barbecue.event.Update;
 import com.duowei.kitchen_barbecue.event.UpdateCfpb;
 import com.google.gson.Gson;
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,5 +99,61 @@ public class MyPost {
                 }
             }
         });
+    }
+
+    public void checkUpdate(final Context context, final boolean auto){
+        String sql="http://ouwtfo4eg.bkt.clouddn.com/kitchen_barbecue.txt";
+        final int version = getAPPVersionCode(context);
+        DownHTTP.getVolley(sql, new VolleyResultListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String versionCode = jsonObject.getString("versionCode");
+                    int currentVersion = Integer.parseInt(versionCode);
+                    if(currentVersion >version){
+                        final String url = jsonObject.getString("url");
+                        final String name = jsonObject.getString("name");
+                        String msg = jsonObject.getString("msg");
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("发现新版本");
+                        builder.setIcon(R.mipmap.logo);
+                        builder.setMessage(msg);
+                        builder.setNegativeButton("暂不升级",null);
+                        builder.setPositiveButton("立即升级", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                EventBus.getDefault().post(new Update(url,name));
+                            }
+                        });
+                        builder.create().show();
+                    }else{
+                        if(auto==false){
+                            Toast.makeText(context,"当前己是最新版本",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //当前APP版本号
+    public int getAPPVersionCode(Context ctx) {
+        int currentVersionCode = 0;
+        PackageManager manager = ctx.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(ctx.getPackageName(), 0);
+//            String appVersionName = info.versionName; // 版本名
+            currentVersionCode = info.versionCode; // 版本号
+//            System.out.println(currentVersionCode + " " + appVersionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return currentVersionCode;
     }
 }

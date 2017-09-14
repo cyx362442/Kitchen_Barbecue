@@ -4,6 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_settings">设置</string>
+    <string name="update">升级</string>
 
     <string name="order_detail">单品明细</string>
 
