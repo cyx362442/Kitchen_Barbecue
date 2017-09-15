@@ -113,11 +113,11 @@ public class TopFragment extends Fragment {
         //超时单品声音
         else if (outTime > tempOutTime) {
             mSound.playSound('4', 0);
-            ColorAnim.getInstacne(getActivity()).startBackground(mBtnOvertime);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     try {
+                        ColorAnim.getInstacne(getActivity()).startBackground(mBtnOvertime);
                         Thread.sleep(2000);
                         mSound.playSound('4', 0);
                     } catch (InterruptedException e) {
@@ -164,8 +164,10 @@ public class TopFragment extends Fragment {
                 isOutTime=!isOutTime;
                 if(isOutTime==true){
                     mBtnOvertime.setText(getString(R.string.allfood));
+                    mBtnOvertime.setBackgroundResource(R.drawable.button_blue);
                 }else{
                     mBtnOvertime.setText(getString(R.string.outtime));
+                    mBtnOvertime.setBackgroundResource(R.drawable.button_orange);
                 }
                 EventBus.getDefault().post(new OutTime(isOutTime));
                 break;

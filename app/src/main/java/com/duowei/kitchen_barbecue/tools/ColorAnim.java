@@ -90,7 +90,7 @@ public class ColorAnim {
                 }
                 count++;
                 if(count>=30){
-                    text.setBackground(context.getResources().getDrawable(R.drawable.button_blue));
+                    text.setBackground(context.getResources().getDrawable(R.drawable.button_orange));
                     count=0;
                     mHandler.removeCallbacks(mRunnable);
                 }

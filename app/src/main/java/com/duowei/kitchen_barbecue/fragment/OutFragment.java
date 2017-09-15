@@ -92,9 +92,10 @@ public class OutFragment extends Fragment implements View.OnClickListener {
             cfpbComplete.setPz(cfpb.getPz());
             cfpbComplete.setSl(cfpb.getSl());
             cfpbComplete.setXdsj(cfpb.getXdsj());
-            cfpbComplete.setWcsj(DateTimes.getTime());
+            cfpbComplete.setWcsj(DateTimes.getSysTime());
             cfpbComplete.setZzry("");
             cfpbComplete.setYhmc(cfpb.getYhmc());
+            cfpbComplete.setTime(cfpb.getTime());
             cfpbComplete.save();
         }
     }

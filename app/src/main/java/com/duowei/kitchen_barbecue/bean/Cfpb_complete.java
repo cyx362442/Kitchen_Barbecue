@@ -16,19 +16,15 @@ public class Cfpb_complete extends DataSupport{
     private String wcsj;
     private String zzry;
     private String yhmc;
+    private long time;
 
-//    public Cfpb_complete(String xmbh, String xmmc, String zh, float sl,
-//                         String pz, String xdsj, String wcsj, String zzry, String yhmc) {
-//        this.xmbh = xmbh;
-//        this.xmmc = xmmc;
-//        this.zh = zh;
-//        this.sl = sl;
-//        this.pz = pz;
-//        this.xdsj = xdsj;
-//        this.wcsj = wcsj;
-//        this.zzry = zzry;
-//        this.yhmc = yhmc;
-//    }
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
 
     public String getYhmc() {
         return yhmc;

@@ -98,6 +98,7 @@
                     android:id="@+id/btn_overtime"
                     style="@style/TopButton"
                     android:text="@string/outtime"
+                    android:background="@drawable/button_orange"
                     android:textColor="@color/white"/>
 
                 <Button

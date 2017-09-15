@@ -11,16 +11,23 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
+import com.duowei.kitchen_barbecue.bean.Cfpb_complete;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.event.Update;
 import com.duowei.kitchen_barbecue.event.UpdateCfpb;
+import com.duowei.kitchen_barbecue.tools.DateTimes;
 import com.google.gson.Gson;
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,6 +92,33 @@ public class MyPost {
         });
     }
 
+    public void getServerTime(){
+        String sql="select CONVERT(varchar(100),getdate(),120) as fwqsj from cfpb|";
+        DownHTTP.postVolley6(Net.url, sql, new VolleyResultListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    String fwqsj = jsonArray.getJSONObject(0).getString("fwqsj");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date datetime = dateFormat.parse(fwqsj);
+                    long currentServerTime = datetime.getTime();
+                    DateTimes.serverTime=currentServerTime;
+
+//                    /*删除72小时前的历史数据*/
+                    long l = currentServerTime - 72*60*60*1000;
+                    DataSupport.deleteAllAsync(Cfpb_complete.class,"time<'"+l+"'");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     public synchronized void setPost7(String sql) {
         DownHTTP.postVolley7(Net.url, sql, new VolleyResultListener() {

@@ -1,5 +1,7 @@
 package com.duowei.kitchen_barbecue.app;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -89,6 +91,8 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
             if(isShow==true){
                 View popuView = getLayoutInflater().inflate(R.layout.popuwindow_item, null);
                 ListView lsvMore = popuView.findViewById(R.id.listView);
+                lsvMore.setDivider(new ColorDrawable(Color.WHITE));
+                lsvMore.setDividerHeight(1);
                 LvAdapter lvAdapter = new LvAdapter(this, tempList);
                 lsvMore.setAdapter(lvAdapter);
                 lsvMore.setOnItemClickListener(this);
@@ -116,6 +120,7 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
         for(int i=0;i<list.size();i++){
             count+=list.get(i).getSl();
         }
+        isShow=false;
         mTvBottom.setText(count+"份");
         mPopupWindow.dismiss();
     }

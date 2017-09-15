@@ -2,6 +2,7 @@ package com.duowei.kitchen_barbecue.app;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.fragment.MainFragment;
 import com.duowei.kitchen_barbecue.fragment.OutFragment;
 import com.duowei.kitchen_barbecue.fragment.TopFragment;
+import com.duowei.kitchen_barbecue.httputils.MyPost;
 import com.duowei.kitchen_barbecue.httputils.Net;
 import com.duowei.kitchen_barbecue.server.PollingService;
 import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
@@ -35,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
 
         mFrameLayout = (FrameLayout) findViewById(R.id.frame_out);
         initFragment();
+
+        deleteRecords();
+    }
+    //删除历史数据
+    private void deleteRecords() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MyPost.getInstance().getServerTime();
+            }
+        },60*1000);
     }
 
     @Override
