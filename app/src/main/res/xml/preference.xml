@@ -13,19 +13,6 @@
             android:title="厨房屏计算机名(必填)">
         </EditTextPreference>
         <ListPreference
-            android:key="@string/printstytle"
-            android:title="打印机类型"
-            android:summary="关闭"
-            android:entries="@array/list_print_stytle"
-            android:entryValues="@array/list_print_stytle"
-            android:dialogTitle="请选择打印机" ></ListPreference>
-        <EditTextPreference
-            android:key="@string/printip"
-            android:summary="192.168.1.124"
-            android:inputType="textUri"
-            android:title="打印机IP(必填项)">
-        </EditTextPreference>
-        <ListPreference
             android:key="@string/columnnum"
             android:title="显示列数"
             android:entries="@array/list_colums"
@@ -35,9 +22,4 @@
        <Preference
            android:key="et_version"
            android:title="版本更新"></Preference>
-        <!--<CheckBoxPreference-->
-            <!--android:key="checkbox"-->
-            <!--android:title="是否开机自启动"-->
-            <!--android:checked="true">-->
-        <!--</CheckBoxPreference>-->
 </PreferenceScreen>

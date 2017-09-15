@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.app.PassRecordsActivity;
 import com.duowei.kitchen_barbecue.app.SellOutActivity;
+import com.duowei.kitchen_barbecue.app.SettingActivity;
 import com.duowei.kitchen_barbecue.app.SettingsActivity;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
@@ -176,7 +177,7 @@ public class TopFragment extends Fragment {
                 startActivity(mIntent);
                 break;
             case R.id.btn_setting:
-                mIntent = new Intent(getActivity(), SettingsActivity.class);
+                mIntent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(mIntent);
                 break;
             case R.id.btn_exit:

@@ -24,4 +24,10 @@
 
     <string name="outtime">超时单品</string>
     <string name="allfood">全部单品</string>
+
+    <string name="color1">超时1</string>
+    <string name="color2">超时2</string>
+    <string name="color3">超时3</string>
+    <string name="color4">超时4</string>
+
 </resources>
