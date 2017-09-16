@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent mServerIntent;
     private FrameLayout mFrameLayout;
     private PreferenceUtils mPreferenceUtils;
+    private Animation mAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +90,23 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void showFragment(ShowOut event){
         if(event.isShow()){
-            mFrameLayout.setVisibility(View.VISIBLE);
-            Animation animation = AnimationUtils.loadAnimation(this, R.anim.animleft);
-            mFrameLayout.startAnimation(animation);
+            mAnimation = AnimationUtils.loadAnimation(this, R.anim.animleft);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mFrameLayout.setVisibility(View.VISIBLE);
+                    mFrameLayout.startAnimation(mAnimation);
+                }
+            });
         }else{
-            Animation animation = AnimationUtils.loadAnimation(this, R.anim.animright);
-            mFrameLayout.startAnimation(animation);
-            mFrameLayout.setVisibility(View.GONE);
+            mAnimation = AnimationUtils.loadAnimation(this, R.anim.animright);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mFrameLayout.startAnimation(mAnimation);
+                    mFrameLayout.setVisibility(View.GONE);
+                }
+            });
         }
     }
 
