@@ -1,5 +1,6 @@
 package com.duowei.kitchen_barbecue.adapter;
 
+import android.graphics.Color;
 import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,7 +24,8 @@ public class MainRecyAdapter extends BaseQuickAdapter<Cfpb> {
     @Override
     protected void convert(BaseViewHolder baseViewHolder, Cfpb cfpb) {
         baseViewHolder.setText(R.id.tv_name,cfpb.getXmmc());
-        baseViewHolder.setText(R.id.tv_pz,cfpb.getPz());
+        baseViewHolder.setText(R.id.tv_pz,cfpb.getPz().
+                replaceAll("&lt;","<").replaceAll("&gt;",">"));
 
         float count=0;
         List<Cfpb_item> listCfpb = cfpb.getListCfpb();
@@ -38,6 +40,12 @@ public class MainRecyAdapter extends BaseQuickAdapter<Cfpb> {
             baseViewHolder.setBackgroundRes(R.id.linearLayout,R.drawable.shape_contiune_outtime);
         }else{
             baseViewHolder.setBackgroundRes(R.id.linearLayout,R.drawable.shape_order_green);
+        }
+
+        if("1".equals(cfpb.getBy10())){
+            baseViewHolder.setTextColor(R.id.tv_name, Color.parseColor("#3F51B5"));
+        }else{
+            baseViewHolder.setTextColor(R.id.tv_name,Color.WHITE);
         }
     }
 }

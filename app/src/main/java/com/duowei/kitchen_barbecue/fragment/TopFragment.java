@@ -2,9 +2,11 @@ package com.duowei.kitchen_barbecue.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,14 @@ import com.duowei.kitchen_barbecue.app.SettingActivity;
 import com.duowei.kitchen_barbecue.app.SettingsActivity;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
+import com.duowei.kitchen_barbecue.event.AddAnim;
 import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.event.OutTime;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.sound.KeySound;
 import com.duowei.kitchen_barbecue.tools.ColorAnim;
+import com.duowei.kitchen_barbecue.view.ShoppingCartAnimationView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -146,6 +150,20 @@ public class TopFragment extends Fragment {
         List<Cfpb> cfpbList = DataSupport.findAll(Cfpb.class);
         mTvCount.setText(cfpbList.size() + "");
     }
+
+//    @Subscribe
+//    public void getAnimView(AddAnim event){
+//        ShoppingCartAnimationView shoppingCartAnimationView = new ShoppingCartAnimationView(getActivity());
+//        int positions[] = new int[2];
+//        event.getView().getLocationInWindow(positions);
+//        shoppingCartAnimationView.setStartPosition(new Point(positions[0], positions[1]));
+//        ViewGroup rootView = (ViewGroup) getActivity().getWindow().getDecorView();
+//        rootView.addView(shoppingCartAnimationView);
+//        int endPosition[] = new int[2];
+//        mBtnOut.getLocationInWindow(endPosition);
+//        shoppingCartAnimationView.setEndPosition(new Point(endPosition[0], endPosition[1]));
+//        shoppingCartAnimationView.startBeizerAnimation();
+//    }
 
     @Override
     public void onDestroyView() {

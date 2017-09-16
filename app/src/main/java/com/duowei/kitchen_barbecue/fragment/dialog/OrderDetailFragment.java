@@ -9,7 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +114,7 @@ public class OrderDetailFragment extends DialogFragment implements View.OnClickL
         mTvInput = inflate.findViewById(R.id.tv_input);
         tvTitle.setText(mCfpb.getXmmc());
         tvNum.setText(count+"");
-        tvDw.setText(mCfpb.getDw());
+        tvDw.setText(mCfpb.getPz());
 
         inflate.findViewById(R.id.tv_zero).setOnClickListener(this);
         inflate.findViewById(R.id.tv_one).setOnClickListener(this);

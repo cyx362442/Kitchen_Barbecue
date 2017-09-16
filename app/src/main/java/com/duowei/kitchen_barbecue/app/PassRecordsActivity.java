@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -97,7 +98,9 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
                 lsvMore.setAdapter(lvAdapter);
                 lsvMore.setOnItemClickListener(this);
 
-                mPopupWindow = new PopupWindow(popuView,400,1000);
+                mPopupWindow = new PopupWindow(popuView);
+                mPopupWindow.setWidth(350);
+                mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                 mPopupWindow.setOutsideTouchable(false);
                 mPopupWindow.showAsDropDown(mTvName);
             }else{

@@ -22,7 +22,8 @@ public class PassRecyAdapter extends BaseQuickAdapter<Cfpb_complete>{
         baseViewHolder.setText(R.id.tv_name,cfpb_complete.getXmmc());
         baseViewHolder.setText(R.id.tv_zh,cfpb_complete.getZh());
         baseViewHolder.setText(R.id.tv_num,cfpb_complete.getSl()+"");
-        baseViewHolder.setText(R.id.tv_pz,cfpb_complete.getPz());
+        baseViewHolder.setText(R.id.tv_pz,cfpb_complete.getPz().
+                replaceAll("&lt;","<").replaceAll("&gt;",">"));
         baseViewHolder.setText(R.id.tv_yhmc,cfpb_complete.getYhmc());
         baseViewHolder.setText(R.id.tv_xdsj,cfpb_complete.getXdsj());
         baseViewHolder.setText(R.id.tv_wcsj,cfpb_complete.getWcsj());

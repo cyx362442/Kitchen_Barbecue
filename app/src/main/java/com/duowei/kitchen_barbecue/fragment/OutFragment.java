@@ -162,6 +162,7 @@ public class OutFragment extends Fragment implements View.OnClickListener {
 
                     sql+="update cfpb set ywcsl=isnull(ywcsl,0)+"+cfpb.getYwcsl()+" where xh="+cfpb.getXH()+"|";
                 }
+                sql+="update cfpb set by10='1' where xmbh='"+cfpb.getXmbh()+"' and pz='"+ cfpb.getPz()+"' and isnull(by10,'0')='0'|";
             }
             if(!TextUtils.isEmpty(sql)){
                 mPb.setVisibility(View.VISIBLE);

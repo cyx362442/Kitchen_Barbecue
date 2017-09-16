@@ -15,6 +15,7 @@ public class Cfpb_item {
     public String by10;
     public String cssj;
     public String wc;
+    public String dw;
     public boolean isSelect;
 
     public boolean isSelect() {
@@ -45,7 +46,9 @@ public class Cfpb_item {
         return xh;
     }
 
-    public Cfpb_item(String xmbh1, String czmc1, float sl1, int fzs, String xh, String pz, String xszt, String by10, String cssj,boolean isSelect) {
+    public Cfpb_item(String xmbh1, String czmc1, float sl1, int fzs, String xh,
+                     String pz, String xszt, String by10, String cssj,String dw,
+                     boolean isSelect) {
         this.xmbh1 = xmbh1;
         this.czmc1 = czmc1;
         this.sl1 = sl1;
@@ -55,6 +58,7 @@ public class Cfpb_item {
         this.xszt = xszt;
         this.by10 = by10;
         this.cssj=cssj;
+        this.dw=dw;
         this.isSelect = isSelect;
     }
 }

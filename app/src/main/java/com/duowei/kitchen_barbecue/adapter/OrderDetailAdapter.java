@@ -25,7 +25,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<Cfpb_item>{
     protected void convert(BaseViewHolder baseViewHolder, Cfpb_item cfpb_item) {
         baseViewHolder.setText(R.id.tv_zh,cfpb_item.czmc1);
         baseViewHolder.setText(R.id.tv_time,cfpb_item.fzs+"分钟");
-        baseViewHolder.setText(R.id.tv_num,cfpb_item.sl1+"份");
+        baseViewHolder.setText(R.id.tv_num,cfpb_item.sl1+cfpb_item.dw);
         if(cfpb_item.isSelect==true){
             baseViewHolder.setBackgroundRes(R.id.linearLayout,R.drawable.shape_square_green);
         }else{
@@ -38,7 +38,5 @@ public class OrderDetailAdapter extends BaseQuickAdapter<Cfpb_item>{
         }else{
             baseViewHolder.setVisible(R.id.tv_over,false);
         }
-//        Log.e("cssj=====",cfpb_item.cssj);
-//        Log.e("fzs=====",cfpb_item.fzs+"");
     }
 }

@@ -17,8 +17,11 @@ import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.adapter.MainRecyAdapter;
 import com.duowei.kitchen_barbecue.adapter.SpacesItemDecoration;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
+import com.duowei.kitchen_barbecue.event.AddAnim;
+import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.event.OutTime;
+import com.duowei.kitchen_barbecue.event.UpdateCfpb;
 import com.duowei.kitchen_barbecue.fragment.dialog.OrderDetailFragment;
 import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
 
@@ -39,6 +42,7 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
     private RecyclerView mRv;
     public  boolean outTime=false;
     private List<Cfpb>listTemp;
+    private View currentView;
 
     public MainFragment() {
         // Required empty public constructor
@@ -105,6 +109,11 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
         }
     }
 
+//    @Subscribe
+//    public void huacai(CountFood event){
+//        EventBus.getDefault().post(new AddAnim(currentView));
+//    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -120,5 +129,6 @@ public class MainFragment extends Fragment implements BaseQuickAdapter.OnRecycle
             detailFragment = OrderDetailFragment.newInstance(listCfpb.get(i));
         }
         detailFragment.show(getFragmentManager(),getString(R.string.order_detail));
+        currentView=view;
     }
 }
