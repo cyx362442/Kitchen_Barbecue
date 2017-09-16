@@ -40,11 +40,6 @@
             android:enabled="true"
             android:exported="true">
         </service>
-
-        <activity
-            android:name=".app.SettingsActivity"
-            android:label="@string/title_activity_settings">
-        </activity>
         <activity
             android:name=".app.SellOutActivity"
             android:label="单品沽清">

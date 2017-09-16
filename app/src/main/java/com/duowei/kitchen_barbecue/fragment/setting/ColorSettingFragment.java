@@ -63,7 +63,7 @@ public class ColorSettingFragment extends PreferenceFragment implements SharedPr
         }else if(key==mContext.getString(R.string.color3)){
             String color3 = sharedPreferences.getString(mContext.getString(R.string.color3), "99999999");
             int colorTime3 = Integer.parseInt(color3);
-            int colorTime2 = mPreferenceUtils.getColor2(mContext.getString(R.string.color2), 1);
+            int colorTime2 = mPreferenceUtils.getColor2(mContext.getString(R.string.color2), 99999999);
             if(colorTime3<=colorTime2){
                 ToastUtil.show("请设置大于超时颜色2的分钟数");
                 return;
@@ -73,7 +73,7 @@ public class ColorSettingFragment extends PreferenceFragment implements SharedPr
         }else if(key==mContext.getString(R.string.color4)){
             String color4 = sharedPreferences.getString(mContext.getString(R.string.color4), "999999999");
             int colorTime4 = Integer.parseInt(color4);
-            int colorTime3 = mPreferenceUtils.getColor3(mContext.getString(R.string.color3), 1);
+            int colorTime3 = mPreferenceUtils.getColor3(mContext.getString(R.string.color3), 999999999);
             if(colorTime4<=colorTime3){
                 ToastUtil.show("请设置大于超时颜色3的分钟数");
                 return;

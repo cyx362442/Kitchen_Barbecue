@@ -1,6 +1,7 @@
 package com.duowei.kitchen_barbecue.app;
 
 import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;

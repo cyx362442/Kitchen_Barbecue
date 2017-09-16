@@ -3,29 +3,29 @@
     <EditTextPreference
         android:inputType="number"
         android:key="@string/color1"
-        android:icon="@drawable/shape_outtime_yellow"
+        android:icon="@drawable/ic_invert_colors_yellow_48dp"
         android:selectAllOnFocus="true"
-        android:clickable="false"
+        android:enabled="false"
         android:title="超时颜色1(初次超时默认1分钟)">
     </EditTextPreference>
     <EditTextPreference
         android:inputType="number"
         android:key="@string/color2"
-        android:icon="@drawable/shape_outtime_orange"
+        android:icon="@drawable/ic_invert_colors_orange_48dp"
         android:selectAllOnFocus="true"
         android:title="超时颜色2">
     </EditTextPreference>
     <EditTextPreference
         android:inputType="number"
         android:key="@string/color3"
-        android:icon="@drawable/shape_outtime_purple"
+        android:icon="@drawable/ic_invert_colors_purpor_48dp"
         android:selectAllOnFocus="true"
         android:title="超时颜色3">
     </EditTextPreference>
     <EditTextPreference
         android:inputType="number"
         android:key="@string/color4"
-        android:icon="@drawable/shape_outtime_red"
+        android:icon="@drawable/ic_invert_colors_red_48dp"
         android:selectAllOnFocus="true"
         android:title="超时颜色4">
     </EditTextPreference>

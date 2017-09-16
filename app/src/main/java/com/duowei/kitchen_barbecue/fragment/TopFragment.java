@@ -17,18 +17,14 @@ import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.app.PassRecordsActivity;
 import com.duowei.kitchen_barbecue.app.SellOutActivity;
 import com.duowei.kitchen_barbecue.app.SettingActivity;
-import com.duowei.kitchen_barbecue.app.SettingsActivity;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
 import com.duowei.kitchen_barbecue.bean.Cfpb_item;
-import com.duowei.kitchen_barbecue.event.AddAnim;
 import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.event.OutTime;
 import com.duowei.kitchen_barbecue.event.ShowOut;
 import com.duowei.kitchen_barbecue.sound.KeySound;
 import com.duowei.kitchen_barbecue.tools.ColorAnim;
-import com.duowei.kitchen_barbecue.view.ShoppingCartAnimationView;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.litepal.crud.DataSupport;
