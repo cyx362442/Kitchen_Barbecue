@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:inputType="textUri"
+        android:inputType="number"
         android:key="@string/color1"
-        android:summary="192.168.1.78"
-        android:title="超时颜色1">
+        android:icon="@drawable/shape_outtime_yellow"
+        android:selectAllOnFocus="true"
+        android:clickable="false"
+        android:title="超时颜色1(初次超时默认1分钟)">
     </EditTextPreference>
     <EditTextPreference
-        android:inputType="textUri"
+        android:inputType="number"
         android:key="@string/color2"
-        android:summary="192.168.1.78"
+        android:icon="@drawable/shape_outtime_orange"
+        android:selectAllOnFocus="true"
         android:title="超时颜色2">
     </EditTextPreference>
     <EditTextPreference
-        android:inputType="textUri"
+        android:inputType="number"
         android:key="@string/color3"
-        android:summary="192.168.1.78"
+        android:icon="@drawable/shape_outtime_purple"
+        android:selectAllOnFocus="true"
         android:title="超时颜色3">
     </EditTextPreference>
     <EditTextPreference
-        android:inputType="textUri"
+        android:inputType="number"
         android:key="@string/color4"
-        android:summary="192.168.1.78"
+        android:icon="@drawable/shape_outtime_red"
+        android:selectAllOnFocus="true"
         android:title="超时颜色4">
     </EditTextPreference>
 </PreferenceScreen>

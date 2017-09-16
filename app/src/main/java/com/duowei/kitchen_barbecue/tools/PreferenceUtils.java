@@ -63,11 +63,35 @@ public class PreferenceUtils {
         return mPreferences.getString(key,value);
     }
 
-    public void setAutoStart(String key, boolean b){
-        mEdit.putBoolean(key,b);
+   public void setColor1(String key, int value){
+       mEdit.putInt(key,value);
+       mEdit.commit();
+   }
+   public int getColor1(String key, int value){
+       return mPreferences.getInt(key,value);
+   }
+
+    public void setColor2(String key, int value){
+        mEdit.putInt(key,value);
         mEdit.commit();
     }
-    public boolean getAutoStart(String key, boolean b){
-        return mPreferences.getBoolean(key,b);
+    public int getColor2(String key, int value){
+        return mPreferences.getInt(key,value);
+    }
+
+    public void setColor3(String key, int value){
+        mEdit.putInt(key,value);
+        mEdit.commit();
+    }
+    public int getColor3(String key, int value){
+        return mPreferences.getInt(key,value);
+    }
+
+    public void setColor4(String key, int value){
+        mEdit.putInt(key,value);
+        mEdit.commit();
+    }
+    public int getColor4(String key, int value){
+        return mPreferences.getInt(key,value);
     }
 }

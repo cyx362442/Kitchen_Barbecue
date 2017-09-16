@@ -9,7 +9,9 @@
     <color name="gray_low">#E5E5E5</color>
     <color name="greenDark">#1A8A72</color>
     <color name="greenLow">#53B4AB</color>
+    <color name="yellowLow">#F6DC72</color>
     <color name="yellow">#F58C2F</color>
     <color name="orange">#EA6901</color>
     <color name="gray_dark">#565656</color>
+    <color name="purple">#FA4BD4</color>
 </resources>
