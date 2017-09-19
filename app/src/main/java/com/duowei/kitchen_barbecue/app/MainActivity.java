@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 MyPost.getInstance().getServerTime();
             }
-        },60*1000);
+        },10*1000);
     }
 
     @Override

@@ -111,7 +111,7 @@ public class MyPost {
 
 //                    /*删除72小时前的历史数据*/
                     long l = currentServerTime - 72*60*60*1000;
-                    DataSupport.deleteAllAsync(Cfpb_complete.class,"time<'"+l+"'");
+                    DataSupport.deleteAll(Cfpb_complete.class,"time<'"+l+"'");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {

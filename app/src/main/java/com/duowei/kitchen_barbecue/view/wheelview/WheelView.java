@@ -76,7 +76,7 @@ public class WheelView extends View {
 	/** 标签抵消 */
 	private static final int LABEL_OFFSET = 8;
 
-	private static final int PADDING = 10;
+	private static final int PADDING = 20;
 
 	/** 默认的可见的物品 */
 	private static final int DEF_VISIBLE_ITEMS = 5;

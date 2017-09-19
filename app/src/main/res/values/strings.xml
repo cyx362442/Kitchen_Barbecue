@@ -30,4 +30,7 @@
     <string name="color3">超时3</string>
     <string name="color4">超时4</string>
 
+    <string name="begintime">起始时间</string>
+    <string name="endtime">结束时间</string>
+
 </resources>

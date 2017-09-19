@@ -59,10 +59,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_input"
-                android:textColor="@color/gray"
-                android:textSize="20dp"
+                android:textColor="@color/gray_dark"
+                android:textSize="25dp"
                 android:padding="5dp"
-                android:hint="请输入起始日期、时间"/>
+                android:hint="请输入起始日期\时间"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,10 +74,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_input"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:padding="5dp"
-                android:textColor="@color/gray"
-                android:hint="请输入结束日期、时间"/>
+                android:textColor="@color/gray_dark"
+                android:hint="请输入结束日期\时间"/>
         </LinearLayout>
     </RelativeLayout>
     <LinearLayout

@@ -1,7 +1,6 @@
 package com.duowei.kitchen_barbecue.app;
 
 import android.app.ActionBar;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,7 +38,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class PassRecordsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class PassRecordsActivity extends AppCompatActivity implements
+        View.OnClickListener, AdapterView.OnItemClickListener {
 
     private PassRecyAdapter mAdapter;
     private List<Cfpb_complete> mCompleteList;
@@ -52,14 +52,15 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
     private TextView mTvBottom;
     private TextView mTvStartDate;
     private WheelMain wheelMainDate;
-    private String beginTime;
+    private String beginTime="2017-01-01 00:00";//开始时间
+    private String endTime="2099-01-01 00:00";//结束时间
     private TextView mTvEndDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_records);
-        mCompleteList = DataSupport.findAll(Cfpb_complete.class);
+        mCompleteList = DataSupport.order("xdsj desc").find(Cfpb_complete.class);
         tempList=new ArrayList<>();
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.recycleView);
@@ -96,14 +97,14 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.tv_clear:
                 DataSupport.deleteAll(Cfpb_complete.class);
-                List<Cfpb_complete> cfpbCompletes = DataSupport.order("wcsj desc").find(Cfpb_complete.class);
+                List<Cfpb_complete> cfpbCompletes = DataSupport.order("xdsj desc").find(Cfpb_complete.class);
                 mAdapter.setNewData(cfpbCompletes);
                 break;
             case R.id.tv_start:
-                showBottoPopupWindow(mTvStartDate);
+                showBottoPopupWindow(mTvStartDate,getString(R.string.begintime));
                 break;
             case R.id.tv_end:
-                showBottoPopupWindow(mTvEndDate);
+                showBottoPopupWindow(mTvEndDate,getString(R.string.endtime));
                 break;
             case R.id.tv_name:
                 isShow=!isShow;
@@ -134,9 +135,15 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
         count=0;
         List<Cfpb_complete>list;
         if(position==0){
-            list=DataSupport.findAll(Cfpb_complete.class);
+            list = DataSupport
+                    .where("xdsj>=? and xdsj<=?",beginTime,endTime)
+                    .order("xdsj desc")
+                    .find(Cfpb_complete.class);
         }else{
-            list = DataSupport.where("xmbh=?", xmbh).find(Cfpb_complete.class);
+            list = DataSupport
+                    .where("xmbh=? and xdsj>=? and xdsj<=?",xmbh,beginTime,endTime)
+                    .order("xdsj desc")
+                    .find(Cfpb_complete.class);
         }
         mAdapter.setNewData(list);
         for(int i=0;i<list.size();i++){
@@ -147,7 +154,7 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
         mPopupWindow.dismiss();
     }
 
-    public void showBottoPopupWindow(final TextView view) {
+    public void showBottoPopupWindow(final TextView view, final String str) {
         WindowManager manager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
         Display defaultDisplay = manager.getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -181,10 +188,10 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
         mPopupWindow.showAtLocation(mTvStartDate, Gravity.CENTER, 0, 0);
         mPopupWindow.setOnDismissListener(new poponDismissListener());
         backgroundAlpha(0.6f);
-        TextView tv_cancle = (TextView) menuView.findViewById(R.id.tv_cancle);
-        TextView tv_ensure = (TextView) menuView.findViewById(R.id.tv_ensure);
-        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
-        tv_pop_title.setText("选择起始时间");
+        TextView tv_cancle = menuView.findViewById(R.id.tv_cancle);
+        TextView tv_ensure = menuView.findViewById(R.id.tv_ensure);
+        TextView tv_pop_title = menuView.findViewById(R.id.tv_pop_title);
+        tv_pop_title.setText(str);
         tv_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -196,10 +203,28 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onClick(View arg0) {
-                beginTime = wheelMainDate.getTime().toString();
-                view.setText(DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm));
+                if(str.equals(getString(R.string.begintime))){
+                    beginTime= DateUtils.formateStringH(wheelMainDate.getTime().toString(),DateUtils.yyyyMMddHHmm);
+                    view.setText(beginTime);
+                }else if(str.equals(getString(R.string.endtime))){
+                    endTime=wheelMainDate.getTime().toString();
+                    endTime=DateUtils.formateStringH(wheelMainDate.getTime().toString(),DateUtils.yyyyMMddHHmm);
+                    view.setText(endTime);
+                }
                 mPopupWindow.dismiss();
                 backgroundAlpha(1f);
+
+//                if(str.equals(getString(R.string.endtime))){
+//                    List<Cfpb_complete> cfpbCompletes = DataSupport
+//                            .where("xdsj>=? and xdsj<=?",beginTime,endTime)
+//                            .find(Cfpb_complete.class);
+//                    mAdapter.setNewData(cfpbCompletes);
+//                }
+
+                List<Cfpb_complete> cfpbCompletes = DataSupport
+                        .where("xdsj>=? and xdsj<=?",beginTime,endTime)
+                        .find(Cfpb_complete.class);
+                mAdapter.setNewData(cfpbCompletes);
             }
         });
     }
@@ -214,6 +239,5 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
         public void onDismiss() {
             backgroundAlpha(1f);
         }
-
     }
 }

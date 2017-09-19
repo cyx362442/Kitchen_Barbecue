@@ -10,7 +10,7 @@
     android:background="#2f19dfbb"
     android:padding="10dp"
     android:id="@+id/tv_pop_title"
-    android:textSize="18sp"
+    android:textSize="24sp"
     android:gravity="center"
     android:textColor="#301616"
     android:layout_width="match_parent"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textColor="#ff0000"
             android:layout_weight="1"
             android:text="取消" />
@@ -93,7 +93,7 @@
             android:textColor="#414341"
             android:padding="5dp"
             android:layout_weight="1"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:text="确定" />
     </LinearLayout>
 

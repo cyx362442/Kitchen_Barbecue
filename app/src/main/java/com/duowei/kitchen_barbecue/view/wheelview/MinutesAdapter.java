@@ -50,7 +50,7 @@ public class MinutesAdapter implements WheelAdapter {
     public String getItem(int index) {
         if (index >= 0 && index < getItemsCount()) {
             String strMin;
-            int value = (minValue + index*15)%60;
+            int value = (minValue + index*5)%60;
             if(value ==0){
                 strMin = "00";
             }else{
