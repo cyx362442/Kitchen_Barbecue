@@ -6,11 +6,86 @@
     android:layout_height="match_parent"
     android:background="@color/gray_low"
     tools:context="com.duowei.kitchen_barbecue.app.PassRecordsActivity">
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史菜品"
+            android:textColor="@color/white"
+            android:padding="20dp"
+            android:textSize="@dimen/textsize20"/>
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="返回"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_reply_white_36dp"/>
+        <TextView
+            android:id="@+id/tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/tv_back"
+            android:text="清空"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_delete_white_36dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="起："
+               android:textColor="@color/white"
+               android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/tv_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_input"
+                android:textColor="@color/gray"
+                android:textSize="20dp"
+                android:padding="5dp"
+                android:hint="请输入起始日期、时间"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="至："
+                android:textColor="@color/white"
+                android:textSize="20dp"/>
+            <TextView
+                android:id="@+id/tv_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_input"
+                android:textSize="20dp"
+                android:padding="5dp"
+                android:textColor="@color/gray"
+                android:hint="请输入结束日期、时间"/>
+        </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bottom"
+        android:layout_below="@+id/rl_top"
         android:layout_margin="10dp"
         android:orientation="vertical">
         <LinearLayout

@@ -1,16 +1,23 @@
 package com.duowei.kitchen_barbecue.app;
 
+import android.app.ActionBar;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -20,10 +27,16 @@ import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.adapter.LvAdapter;
 import com.duowei.kitchen_barbecue.adapter.PassRecyAdapter;
 import com.duowei.kitchen_barbecue.bean.Cfpb_complete;
+import com.duowei.kitchen_barbecue.view.wheelview.DateUtils;
+import com.duowei.kitchen_barbecue.view.wheelview.JudgeDate;
+import com.duowei.kitchen_barbecue.view.wheelview.ScreenInfo;
+import com.duowei.kitchen_barbecue.view.wheelview.WheelMain;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PassRecordsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -37,6 +50,10 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
     private String str="";
     private int count=0;
     private TextView mTvBottom;
+    private TextView mTvStartDate;
+    private WheelMain wheelMainDate;
+    private String beginTime;
+    private TextView mTvEndDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +68,15 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
         mAdapter = new PassRecyAdapter(mCompleteList);
         rv.setAdapter(mAdapter);
 
+        mTvStartDate = (TextView) findViewById(R.id.tv_start);
+        mTvEndDate = (TextView) findViewById(R.id.tv_end);
         mTvName = (TextView) findViewById(R.id.tv_name);
-        mTvName.setOnClickListener(this);
         mTvBottom = (TextView) findViewById(R.id.tv_count);
+        findViewById(R.id.tv_back).setOnClickListener(this);
+        findViewById(R.id.tv_clear).setOnClickListener(this);
+        mTvStartDate.setOnClickListener(this);
+        mTvEndDate.setOnClickListener(this);
+        mTvName.setOnClickListener(this);
         tempList.add(new Cfpb_complete());
         for(Cfpb_complete cfpb: mCompleteList){
             count+=cfpb.getSl();
@@ -66,46 +89,42 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu,menu);
-        MenuItem item = menu.findItem(R.id.menu_clear);
-        item.setVisible(true);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.menu_exit){
-            finish();
-        }else if(item.getItemId()==R.id.menu_clear){
-            DataSupport.deleteAll(Cfpb_complete.class);
-            List<Cfpb_complete> cfpbCompletes = DataSupport.order("wcsj desc").find(Cfpb_complete.class);
-            mAdapter.setNewData(cfpbCompletes);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.tv_name){
-            isShow=!isShow;
-            if(isShow==true){
-                View popuView = getLayoutInflater().inflate(R.layout.popuwindow_item, null);
-                ListView lsvMore = popuView.findViewById(R.id.listView);
-                lsvMore.setDivider(new ColorDrawable(Color.WHITE));
-                lsvMore.setDividerHeight(1);
-                LvAdapter lvAdapter = new LvAdapter(this, tempList);
-                lsvMore.setAdapter(lvAdapter);
-                lsvMore.setOnItemClickListener(this);
+        switch (view.getId()){
+            case R.id.tv_back:
+                finish();
+                break;
+            case R.id.tv_clear:
+                DataSupport.deleteAll(Cfpb_complete.class);
+                List<Cfpb_complete> cfpbCompletes = DataSupport.order("wcsj desc").find(Cfpb_complete.class);
+                mAdapter.setNewData(cfpbCompletes);
+                break;
+            case R.id.tv_start:
+                showBottoPopupWindow(mTvStartDate);
+                break;
+            case R.id.tv_end:
+                showBottoPopupWindow(mTvEndDate);
+                break;
+            case R.id.tv_name:
+                isShow=!isShow;
+                if(isShow==true){
+                    View popuView = getLayoutInflater().inflate(R.layout.popuwindow_item, null);
+                    ListView lsvMore = popuView.findViewById(R.id.listView);
+                    lsvMore.setDivider(new ColorDrawable(Color.WHITE));
+                    lsvMore.setDividerHeight(1);
+                    LvAdapter lvAdapter = new LvAdapter(this, tempList);
+                    lsvMore.setAdapter(lvAdapter);
+                    lsvMore.setOnItemClickListener(this);
 
-                mPopupWindow = new PopupWindow(popuView);
-                mPopupWindow.setWidth(350);
-                mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                mPopupWindow.setOutsideTouchable(false);
-                mPopupWindow.showAsDropDown(mTvName);
-            }else{
-                mPopupWindow.dismiss();
-            }
+                    mPopupWindow = new PopupWindow(popuView);
+                    mPopupWindow.setWidth(350);
+                    mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                    mPopupWindow.setOutsideTouchable(false);
+                    mPopupWindow.showAsDropDown(mTvName);
+                }else{
+                    mPopupWindow.dismiss();
+                }
+                break;
         }
     }
 
@@ -126,5 +145,75 @@ public class PassRecordsActivity extends AppCompatActivity implements View.OnCli
         isShow=false;
         mTvBottom.setText(count+"份");
         mPopupWindow.dismiss();
+    }
+
+    public void showBottoPopupWindow(final TextView view) {
+        WindowManager manager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+        Display defaultDisplay = manager.getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(outMetrics);
+        int width = outMetrics.widthPixels;
+        View menuView = LayoutInflater.from(this).inflate(R.layout.show_popup_window,null);
+        final PopupWindow mPopupWindow = new PopupWindow(menuView, (int)(width*0.8),
+                ActionBar.LayoutParams.WRAP_CONTENT);
+        ScreenInfo screenInfoDate = new ScreenInfo(this);
+        wheelMainDate = new WheelMain(menuView, true);
+        wheelMainDate.screenheight = screenInfoDate.getHeight();
+        String time = DateUtils.currentMonth().toString();
+        Calendar calendar = Calendar.getInstance();
+        if (JudgeDate.isDate(time, "yyyy-MM-DD")) {
+            try {
+                calendar.setTime(new Date(time));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        wheelMainDate.initDateTimePicker(year, month, day, hours,minute);
+        mPopupWindow.setAnimationStyle(R.style.AnimationPreview);
+        mPopupWindow.setTouchable(true);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopupWindow.showAtLocation(mTvStartDate, Gravity.CENTER, 0, 0);
+        mPopupWindow.setOnDismissListener(new poponDismissListener());
+        backgroundAlpha(0.6f);
+        TextView tv_cancle = (TextView) menuView.findViewById(R.id.tv_cancle);
+        TextView tv_ensure = (TextView) menuView.findViewById(R.id.tv_ensure);
+        TextView tv_pop_title = (TextView) menuView.findViewById(R.id.tv_pop_title);
+        tv_pop_title.setText("选择起始时间");
+        tv_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                mPopupWindow.dismiss();
+                backgroundAlpha(1f);
+            }
+        });
+        tv_ensure.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                beginTime = wheelMainDate.getTime().toString();
+                view.setText(DateUtils.formateStringH(beginTime,DateUtils.yyyyMMddHHmm));
+                mPopupWindow.dismiss();
+                backgroundAlpha(1f);
+            }
+        });
+    }
+
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getWindow().setAttributes(lp);
+    }
+    class poponDismissListener implements PopupWindow.OnDismissListener {
+        @Override
+        public void onDismiss() {
+            backgroundAlpha(1f);
+        }
+
     }
 }

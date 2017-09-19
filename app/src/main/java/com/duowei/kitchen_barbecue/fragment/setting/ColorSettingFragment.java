@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.app.MyApplication;

@@ -2,7 +2,6 @@ package com.duowei.kitchen_barbecue.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
