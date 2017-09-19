@@ -7,8 +7,8 @@ android {
         applicationId "com.duowei.kitchen_barbecue"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 7
-        versionName "V20170907"
+        versionCode 8
+        versionName "V20170908"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

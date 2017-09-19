@@ -214,17 +214,15 @@ public class PassRecordsActivity extends AppCompatActivity implements
                 mPopupWindow.dismiss();
                 backgroundAlpha(1f);
 
-//                if(str.equals(getString(R.string.endtime))){
-//                    List<Cfpb_complete> cfpbCompletes = DataSupport
-//                            .where("xdsj>=? and xdsj<=?",beginTime,endTime)
-//                            .find(Cfpb_complete.class);
-//                    mAdapter.setNewData(cfpbCompletes);
-//                }
-
                 List<Cfpb_complete> cfpbCompletes = DataSupport
                         .where("xdsj>=? and xdsj<=?",beginTime,endTime)
                         .find(Cfpb_complete.class);
                 mAdapter.setNewData(cfpbCompletes);
+                count=0;
+                for(int i=0;i<cfpbCompletes.size();i++){
+                    count+=cfpbCompletes.get(i).getSl();
+                }
+                mTvBottom.setText(count+"份");
             }
         });
     }
