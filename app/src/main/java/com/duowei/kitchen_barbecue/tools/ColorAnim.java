@@ -80,7 +80,7 @@ public class ColorAnim {
         mHandler.postDelayed(mRunnable=new Runnable() {
             @Override
             public void run() {
-                mHandler.postDelayed(mRunnable,200);
+                mHandler.postDelayed(mRunnable,150);
                 if(count%3==0){
                     text.setBackground(context.getResources().getDrawable(R.drawable.button_red));
                 }else if(count%3==1){

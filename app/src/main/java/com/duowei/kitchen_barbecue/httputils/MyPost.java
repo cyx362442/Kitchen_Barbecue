@@ -109,8 +109,8 @@ public class MyPost {
                     long currentServerTime = datetime.getTime();
                     DateTimes.serverTime=currentServerTime;
 
-//                    /*删除72小时前的历史数据*/
-                    long l = currentServerTime - 72*60*60*1000;
+//                    /*删除120小时前的历史数据*/
+                    long l = currentServerTime - 120*60*60*1000;
                     DataSupport.deleteAll(Cfpb_complete.class,"time<'"+l+"'");
                 } catch (JSONException e) {
                     e.printStackTrace();

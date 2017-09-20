@@ -97,34 +97,24 @@ public class TopFragment extends Fragment {
         //超时单品、新订单声音、动画
         if (foodCount > tempNum && outTime > tempOutTime) {
             mSound.playSound('4', 0);
-            handler.post(new Runnable() {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     mSound.playSound('0', 0);
                     ColorAnim.getInstacne(getActivity()).startColor(mTvCooked);
                 }
-            });
+            },2000);
         }
         //超时单品声音
         else if (outTime > tempOutTime) {
             mSound.playSound('4', 0);
-            handler.post(new Runnable() {
+            ColorAnim.getInstacne(getActivity()).startBackground(mBtnOvertime);
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        ColorAnim.getInstacne(getActivity()).startBackground(mBtnOvertime);
-                        Thread.sleep(2000);
-                        mSound.playSound('4', 0);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    mSound.playSound('4', 0);
                 }
-            });
+            },2000);
         }
         //新的订单
         else if (foodCount > tempNum) {

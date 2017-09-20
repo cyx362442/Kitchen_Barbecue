@@ -91,22 +91,12 @@ public class MainActivity extends AppCompatActivity {
     public void showFragment(ShowOut event){
         if(event.isShow()){
             mAnimation = AnimationUtils.loadAnimation(this, R.anim.animleft);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mFrameLayout.setVisibility(View.VISIBLE);
-                    mFrameLayout.startAnimation(mAnimation);
-                }
-            });
+            mFrameLayout.setVisibility(View.VISIBLE);
+            mFrameLayout.startAnimation(mAnimation);
         }else{
             mAnimation = AnimationUtils.loadAnimation(this, R.anim.animright);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mFrameLayout.startAnimation(mAnimation);
-                    mFrameLayout.setVisibility(View.GONE);
-                }
-            });
+            mFrameLayout.startAnimation(mAnimation);
+            mFrameLayout.setVisibility(View.GONE);
         }
     }
 
