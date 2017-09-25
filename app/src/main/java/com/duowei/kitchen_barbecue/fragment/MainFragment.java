@@ -17,11 +17,8 @@ import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.adapter.MainRecyAdapter;
 import com.duowei.kitchen_barbecue.adapter.SpacesItemDecoration;
 import com.duowei.kitchen_barbecue.bean.Cfpb;
-import com.duowei.kitchen_barbecue.event.AddAnim;
-import com.duowei.kitchen_barbecue.event.CountFood;
 import com.duowei.kitchen_barbecue.event.Order;
 import com.duowei.kitchen_barbecue.event.OutTime;
-import com.duowei.kitchen_barbecue.event.UpdateCfpb;
 import com.duowei.kitchen_barbecue.fragment.dialog.OrderDetailFragment;
 import com.duowei.kitchen_barbecue.tools.PreferenceUtils;
 

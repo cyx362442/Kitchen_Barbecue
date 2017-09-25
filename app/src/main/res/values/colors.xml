@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="reddark">#AA0000</color>
     <color name="colorBlue">#467CD4</color>
     <color name="white">#ffffff</color>
     <color name="gray">#9F9F9F</color>
@@ -13,5 +14,5 @@
     <color name="yellow">#F58C2F</color>
     <color name="orange">#EA6901</color>
     <color name="gray_dark">#565656</color>
-    <color name="purple">#FA4BD4</color>
+    <color name="purple">#C326DA</color>
 </resources>

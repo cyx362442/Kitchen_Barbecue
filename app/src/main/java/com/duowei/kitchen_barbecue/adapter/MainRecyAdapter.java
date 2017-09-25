@@ -47,8 +47,13 @@ public class MainRecyAdapter extends BaseQuickAdapter<Cfpb> {
         for(Cfpb_item cfpbitem:listCfpb){
             count+=cfpbitem.sl1;
         }
-        baseViewHolder.setText(R.id.tv_num,count+cfpb.getDw());
-
+        String str=count+"";
+        if(str.endsWith(".0")){
+            baseViewHolder.setText(R.id.tv_num,str.substring(0,str.length()-2));
+        }else{
+            baseViewHolder.setText(R.id.tv_num,count+"");
+        }
+        baseViewHolder.setText(R.id.tv_dw,cfpb.getDw());
         //超时单品
         if(!TextUtils.isEmpty(cfpb.getCssj())){
             int fzs = cfpb.getFzs();

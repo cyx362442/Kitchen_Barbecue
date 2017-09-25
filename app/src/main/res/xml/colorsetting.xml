@@ -11,21 +11,21 @@
     <EditTextPreference
         android:inputType="number"
         android:key="@string/color2"
-        android:icon="@drawable/ic_invert_colors_orange_48dp"
+        android:icon="@drawable/ic_invert_colors_red_48dp"
         android:selectAllOnFocus="true"
         android:title="超时颜色2">
     </EditTextPreference>
     <EditTextPreference
+        android:icon="@drawable/ic_invert_colors_purpor_48dp"
         android:inputType="number"
         android:key="@string/color3"
-        android:icon="@drawable/ic_invert_colors_purpor_48dp"
         android:selectAllOnFocus="true"
         android:title="超时颜色3">
     </EditTextPreference>
     <EditTextPreference
         android:inputType="number"
         android:key="@string/color4"
-        android:icon="@drawable/ic_invert_colors_red_48dp"
+        android:icon="@drawable/ic_invert_colors_reddark_48dp"
         android:selectAllOnFocus="true"
         android:title="超时颜色4">
     </EditTextPreference>

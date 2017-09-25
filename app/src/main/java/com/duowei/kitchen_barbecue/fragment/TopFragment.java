@@ -92,7 +92,12 @@ public class TopFragment extends Fragment {
                 outTime = outTime + cfpb.getSl();
             }
         }
-        mTvCooked.setText(foodCount + "份");
+        String str=foodCount+"";
+        if((str).endsWith(".0")){
+            mTvCooked.setText(str.substring(0,str.length()-2)+"份");
+        }else{
+            mTvCooked.setText(foodCount + "份");
+        }
         Handler handler = new Handler();
         //超时单品、新订单声音、动画
         if (foodCount > tempNum && outTime > tempOutTime) {

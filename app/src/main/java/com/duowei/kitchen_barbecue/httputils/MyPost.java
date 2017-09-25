@@ -126,7 +126,6 @@ public class MyPost {
             @Override
             public void onErrorResponse(VolleyError error) {
             }
-
             @Override
             public void onResponse(String response) {
                 if (response.contains("richado")) {

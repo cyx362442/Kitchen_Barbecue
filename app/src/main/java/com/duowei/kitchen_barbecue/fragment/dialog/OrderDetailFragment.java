@@ -259,10 +259,18 @@ public class OrderDetailFragment extends DialogFragment implements View.OnClickL
     }
 
     @Override
-    public void onItemClick(View view, int i) {
-        Cfpb_item cfpb_item = mListCfpbItem.get(i);
+    public void onItemClick(View view, int position) {
+        Cfpb_item cfpb_item = mListCfpbItem.get(position);
         cfpb_item.isSelect=!cfpb_item.isSelect;
         mDetailAdapter.notifyDataSetChanged();
-        mTvInput.setText(str="");
+
+        float selectCount=0;
+        for(int i=0;i<mListCfpbItem.size();i++){
+            Cfpb_item cfpbItem = mListCfpbItem.get(i);
+            if(cfpbItem.isSelect){
+                selectCount+=cfpbItem.sl1;
+            }
+        }
+        mTvInput.setText(selectCount+"");
     }
 }
