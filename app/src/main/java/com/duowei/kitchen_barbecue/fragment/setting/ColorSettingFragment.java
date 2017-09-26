@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.duowei.kitchen_barbecue.R;
 import com.duowei.kitchen_barbecue.app.MyApplication;
@@ -59,7 +60,7 @@ public class ColorSettingFragment extends PreferenceFragment
                 return;
             }
             mEtColor2.setSummary(color2+"分钟");
-            mPreferenceUtils.setColor2(getString(R.string.color2), colorTime2);
+            mPreferenceUtils.setColor2(mContext.getString(R.string.color2), colorTime2);
         }else if(key==mContext.getString(R.string.color3)){
             String color3 = sharedPreferences.getString(mContext.getString(R.string.color3), "99999999");
             int colorTime3 = Integer.parseInt(color3);
@@ -79,7 +80,7 @@ public class ColorSettingFragment extends PreferenceFragment
                 return;
             }
             mEtColor4.setSummary(color4+"分钟");
-            mPreferenceUtils.setColor4(getString(R.string.color4), colorTime4);
+            mPreferenceUtils.setColor4(mContext.getString(R.string.color4), colorTime4);
         }
     }
 }
