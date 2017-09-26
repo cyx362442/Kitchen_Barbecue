@@ -114,7 +114,7 @@ public class OrderDetailFragment extends DialogFragment implements View.OnClickL
         mTvInput = inflate.findViewById(R.id.tv_input);
         tvTitle.setText(mCfpb.getXmmc());
         tvNum.setText(count+"");
-        tvDw.setText(mCfpb.getPz());
+        tvDw.setText(mCfpb.getPz().replaceAll("&lt;","<").replaceAll("&gt;",">"));
 
         inflate.findViewById(R.id.tv_zero).setOnClickListener(this);
         inflate.findViewById(R.id.tv_one).setOnClickListener(this);

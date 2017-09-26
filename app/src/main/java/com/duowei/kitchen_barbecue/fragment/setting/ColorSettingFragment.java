@@ -14,7 +14,8 @@ import com.duowei.kitchen_barbecue.tools.ToastUtil;
 /**
  * A simple {@link} subclass.
  */
-public class ColorSettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class ColorSettingFragment extends PreferenceFragment
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private PreferenceUtils mPreferenceUtils;
     private Context mContext;
