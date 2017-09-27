@@ -144,7 +144,6 @@ public class OutFragment extends Fragment implements View.OnClickListener {
             EventBus.getDefault().post(new ShowOut(false));
         }else if(view.getId()==R.id.btn_confirm){
             String sql="";
-            String sysTime = DateTimes.getSysTime();//本地时间
             for(int i=0;i<listCfpb.size();i++){
                 Cfpb cfpb = listCfpb.get(i);
                 if(cfpb.getSl()<=cfpb.getYwcsl()){
@@ -153,16 +152,14 @@ public class OutFragment extends Fragment implements View.OnClickListener {
                             "             from CFPB where xh = '" + cfpb.getXH() + "'|";
                     if(mPrintStytle.equals(getString(R.string.print_server))&&!TextUtils.isEmpty(mPrinterIp)){//打印服务器
                         sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
-                                "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getSl()+",pz,'"+mKetchen+"','3','"+sysTime+"',by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
+                                "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getSl()+",pz,'"+mKetchen+"','3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
                     }
-
                     sql+="delete from cfpb where xh='"+cfpb.getXH()+"'|";
                 }else if(cfpb.getSl()>cfpb.getYwcsl()){
                     if(mPrintStytle.equals(getString(R.string.print_server))&&!TextUtils.isEmpty(mPrinterIp)){//打印服务器
                         sql+="insert into pbdyxxb(xh,wmdbh,xmbh,xmmc,dw,sl,pz,syyxm,xtbz,czsj,zh,jsj)" +
-                                "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getYwcsl()+",pz,'"+mKetchen+"','3','"+sysTime+"',by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
+                                "select xh,wmdbh,xmbh,xmmc,dw,"+cfpb.getYwcsl()+",pz,'"+mKetchen+"','3',getdate(),by1,'"+mPrinterIp+"' from cfpb where XH='"+cfpb.getXH()+"'|";
                     }
-
                     sql+="update cfpb set ywcsl=isnull(ywcsl,0)+"+cfpb.getYwcsl()+" where xh="+cfpb.getXH()+"|";
                 }
                 sql+="update cfpb set by10='1' where xmbh='"+cfpb.getXmbh()+"' and pz='"+ cfpb.getPz()+"' and isnull(by10,'0')='0'|";

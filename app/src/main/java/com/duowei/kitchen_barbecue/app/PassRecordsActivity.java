@@ -64,7 +64,7 @@ public class PassRecordsActivity extends AppCompatActivity implements
         tempList=new ArrayList<>();
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.recycleView);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+
         rv.addItemDecoration(new DividerItemDecoration(this,1));
         mAdapter = new PassRecyAdapter(mCompleteList);
         rv.setAdapter(mAdapter);

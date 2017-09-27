@@ -128,6 +128,7 @@ public class MyPost {
             }
             @Override
             public void onResponse(String response) {
+                Log.e("response=====",response);
                 if (response.contains("richado")) {
                     EventBus.getDefault().post(new UpdateCfpb());
                 }
