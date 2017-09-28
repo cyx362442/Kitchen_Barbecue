@@ -1,5 +1,7 @@
 package com.duowei.kitchen_barbecue.adapter;
 
+import android.util.Log;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.duowei.kitchen_barbecue.R;
